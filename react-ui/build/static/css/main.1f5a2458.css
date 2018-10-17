@@ -1,0 +1,2 @@
+[role=main]{padding-top:48px}.sidebar{position:fixed;top:0;bottom:0;left:0;padding:48px 0 0}.sidebar-sticky{position:relative;top:0;height:calc(100vh - 48px);overflow-x:hidden;overflow-y:auto}@supports ((position:-webkit-sticky) or (position:sticky)){.sidebar-sticky{position:-webkit-sticky;position:sticky}}.nav-item a.selected{font-weight:700;color:#2c3e50}
+/*# sourceMappingURL=main.1f5a2458.css.map*/
