@@ -73,7 +73,7 @@ class App extends Component {
     switch (type) {
       case 'product':
         jobs = jobs.filter(function (job) {
-          return job.product == key;
+          return job.product === key;
         });
         break;
       case 'usertype':
