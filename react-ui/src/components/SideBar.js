@@ -8,11 +8,11 @@ class SideBar extends Component {
                 <div className="sidebar-sticky">
                     <ul className="nav flex-column">
                         {this.props.data.map(product => (
-                            <li className="nav-item">
+                            <li className="nav-item" key={product.key}>
                                 <NavLink to={'/product/' + product.key} activeClassName="selected">{product.title}</NavLink>
                                 <ul>
                                     {product.usertypes.map(userType => (
-                                        <li className="nav-item">
+                                        <li className="nav-item" key={userType.key}>
                                             <NavLink to={'/usertype/' + userType.key} activeClassName="selected">{userType.title}</NavLink>
                                         </li>
                                     ))}

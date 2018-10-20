@@ -18,7 +18,7 @@ class JobStoryList extends Component {
     render() {
         return (
             this.props.getParentState().renderedJobStoryList.map(job => (
-                <JobStory job={job} />
+                <JobStory job={job} key={job.id} />
             ))
         );
     }
