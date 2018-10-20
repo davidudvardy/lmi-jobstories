@@ -34,9 +34,21 @@ class JobStory extends Component {
     render() {
         return (
             <div id={'jobstory' + this.state.renderedJob.id} className="list-group flex-row" style={{marginBottom: 10 + 'px'}}>
-                <Card text={this.state.renderedJob.context} type="context" editing={this.state.editing} />
-                <Card text={this.state.renderedJob.motivation} type="motivation" editing={this.state.editing} />
-                <Card text={this.state.renderedJob.outcome} type="outcome" editing={this.state.editing} />
+                <Card 
+                    text={this.state.renderedJob.context}
+                    type="context"
+                    editing={this.state.editing}
+                />
+                <Card 
+                    text={this.state.renderedJob.motivation}
+                    type="motivation"
+                    editing={this.state.editing}
+                />
+                <Card 
+                    text={this.state.renderedJob.outcome}
+                    type="outcome"
+                    editing={this.state.editing}
+                />
                 <ToolsTab 
                     onStartEditing={this.handleStartEditing} 
                     onStopEditing={this.handleStopEditing} 
@@ -53,7 +65,11 @@ const Card = (props) => {
     return (
         <div className={"list-group-item list-group-item-action flex-row align-items-start " + props.type.toLowerCase()}>
             <small style={{textTransform: 'capitalize'}}>{props.type}</small>
-            { (props.editing) ? <EditableP value={props.text} className="mb-1" style={{color: '#000', background: 'rgb(255,250,230)'}}/> : plainText }
+            { (props.editing) ? <EditableP 
+                    value={props.text}
+                    className="mb-1"
+                    style={{color: '#000', background: 'rgb(255,250,230)'}}
+                /> : plainText }
         </div>
     )
 }
@@ -92,7 +108,6 @@ function contentEditable(WrappedComponent) {
         };
 
         edit = () => {
-            console.log("edit");
             this.setState(
                 {
                     editing: true
@@ -104,27 +119,24 @@ function contentEditable(WrappedComponent) {
         };
 
         save = () => {
-            // TODO: set renderedJobStories from here somehow?
-            console.log("save");
-            //console.log("Saving", this.domElm.textContent);
             this.setState(
                 {
                     editing: false
                 },
                 () => {
-                    if (this.props.onSave && this.isValueChanged()) {
-                        console.log("Value is changed", this.domElm.textContent);
+                    if (this.isValueChanged()) {
+                        // TODO: set renderedJobStories from here somehow?
+                        console.log("Should be saving", this.domElm.textContent);
                     }
                 }
             );
         };
 
         cancel = () => {
-            // TODO: restore original value to P somehow?
-            console.log("cancel");
             this.setState({
-                editing: false
+                editing: false,
             });
+            this.domElm.textContent = this.props.value;
         };
 
         isValueChanged = () => {
@@ -132,7 +144,6 @@ function contentEditable(WrappedComponent) {
         };
 
         handleKeyDown = e => {
-            console.log("handleKeyDown", e);
             const { key } = e;
             switch (key) {
                 case "Enter":
