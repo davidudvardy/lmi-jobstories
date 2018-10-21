@@ -29,3 +29,8 @@
   font-weight: bold;
   color: #2C3E50;
 }
+
+.editing {
+  color: #000;
+  background: rgb(255,250,230);
+}
