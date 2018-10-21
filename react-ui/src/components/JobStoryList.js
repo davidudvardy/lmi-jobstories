@@ -2,6 +2,11 @@ import React, {Component} from 'react';
 import JobStory from './JobStory';
 
 class JobStoryList extends Component {
+    constructor(props) {
+        super(props);
+        this.handleJobUpdate = this.handleJobUpdate.bind(this);
+    }
+
     componentDidMount() {
         document.getElementById("filter").oninput = this.handleFilterChange;
     }
@@ -15,10 +20,14 @@ class JobStoryList extends Component {
         });
     }
 
+    handleJobUpdate(obj) {
+        console.log("Should update job:", obj.id, obj.type, obj.updatedText);
+    }
+
     render() {
         return (
-            this.props.getParentState().renderedJobStoryList.map(job => (
-                <JobStory job={job} key={job.id} />
+            this.props.data.map(job => (
+                <JobStory job={job} key={job.id} onJobUpdate={this.handleJobUpdate} />
             ))
         );
     }

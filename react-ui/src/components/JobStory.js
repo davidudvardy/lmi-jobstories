@@ -1,14 +1,15 @@
 import React, {Component} from 'react';
+import Card from './Card'
 
 class JobStory extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            editing: false,
-            originalJob: this.props.job,
-            renderedJob: this.props.job
+            editing: false
         }
+
+        this.handleCardUpdate = this.handleCardUpdate.bind(this);
     }
 
     handleStartEditing = (event) => {
@@ -20,34 +21,44 @@ class JobStory extends Component {
     handleStopEditing = (event) => {
         if(event.target.id == "discard") {
             this.setState({
-                editing: false,
-                renderedJob: this.props.job
+                editing: false
+                // TODO: probably the state change in itself will re-render the cards, and update their 'text' value with the one set from props above
             });
         } else if(event.target.id == "save") {
             this.setState({
-                editing: false,
-                originalJob: this.state.renderedJob
+                editing: false
             });
+            // TODO: besides setting state, we will need to update the job by calling the passed onJobUpdate function, to update data in parent
         }
+    }
+
+    handleCardUpdate(obj) {
+        this.props.onJobUpdate(obj);
     }
 
     render() {
         return (
-            <div id={'jobstory' + this.state.renderedJob.id} className="list-group flex-row" style={{marginBottom: 10 + 'px'}}>
+            <div className="list-group flex-row" style={{marginBottom: 10 + 'px'}}>
                 <Card 
-                    text={this.state.renderedJob.context}
+                    jobId={this.props.job.id}
+                    text={this.props.job.context}
                     type="context"
                     editing={this.state.editing}
+                    onCardUpdate={this.handleCardUpdate}
                 />
                 <Card 
-                    text={this.state.renderedJob.motivation}
+                    jobId={this.props.job.id}
+                    text={this.props.job.motivation}
                     type="motivation"
                     editing={this.state.editing}
+                    onCardUpdate={this.handleCardUpdate}
                 />
                 <Card 
-                    text={this.state.renderedJob.outcome}
+                    jobId={this.props.job.id}
+                    text={this.props.job.outcome}
                     type="outcome"
                     editing={this.state.editing}
+                    onCardUpdate={this.handleCardUpdate}
                 />
                 <ToolsTab 
                     onStartEditing={this.handleStartEditing} 
@@ -56,22 +67,6 @@ class JobStory extends Component {
             </div>
         );
     }
-}
-
-const Card = (props) => {
-    let EditableP = contentEditable("p");
-    let plainText = <p className="mb-1">{props.text}</p>;
-
-    return (
-        <div className={"list-group-item list-group-item-action flex-row align-items-start " + props.type.toLowerCase()}>
-            <small style={{textTransform: 'capitalize'}}>{props.type}</small>
-            { (props.editing) ? <EditableP 
-                    value={props.text}
-                    className="mb-1"
-                    style={{color: '#000', background: 'rgb(255,250,230)'}}
-                /> : plainText }
-        </div>
-    )
 }
 
 const ToolsTab = (props) => {
@@ -89,91 +84,6 @@ const ToolsTab = (props) => {
             </div>
         );
     }
-}
-
-function contentEditable(WrappedComponent) {
-    return class extends React.Component {
-        state = {
-            editing: false
-        };
-
-        toggleEdit = e => {
-            e.stopPropagation();
-            if (this.state.editing) {
-                // TODO: what is this?
-                this.cancel();
-            } else {
-                this.edit();
-            }
-        };
-
-        edit = () => {
-            this.setState(
-                {
-                    editing: true
-                },
-                () => {
-                    this.domElm.focus();
-                }
-            );
-        };
-
-        save = () => {
-            this.setState(
-                {
-                    editing: false
-                },
-                () => {
-                    if (this.isValueChanged()) {
-                        // TODO: set renderedJobStories from here somehow?
-                        console.log("Should be saving", this.domElm.textContent);
-                    }
-                }
-            );
-        };
-
-        cancel = () => {
-            this.setState({
-                editing: false,
-            });
-            this.domElm.textContent = this.props.value;
-        };
-
-        isValueChanged = () => {
-            return this.props.value !== this.domElm.textContent;
-        };
-
-        handleKeyDown = e => {
-            const { key } = e;
-            switch (key) {
-                case "Enter":
-                    this.save();
-                    break;
-                case "Escape":
-                    this.cancel();
-                    break;
-            }
-        };
-
-        render() {
-            return (
-                <WrappedComponent
-                    className={this.state.editing ? "editing" : ""}
-                    onClick={this.toggleEdit}
-                    contentEditable={this.state.editing}
-                    suppressContentEditableWarning
-                    ref={domNode => {
-                        this.domElm = domNode;
-                    }}
-                    onBlur={this.save}
-                    onKeyDown={this.handleKeyDown}
-                    {...this.props}
-                >
-                    {this.props.value}
-                </WrappedComponent>
-            );
-        }
-    };
 }
 
 

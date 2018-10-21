@@ -1,34 +1,45 @@
 import React, {Component} from 'react';
 
-class Card extends Component {
+class Card extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            originalText: this.props.text,
-            renderedText: this.props.text
-        };
+        this.handleCardUpdate = this.handleCardUpdate.bind(this);
     }
 
-    handleChange(event) {
-        this.setState({
-            renderedText: event.target.value
-        })
+    handleCardUpdate(event) {
+        this.props.onCardUpdate({
+            id: this.props.jobId,
+            type: this.props.type,
+            updatedText: event.target.value
+        });
     }
 
     render() {
+        let wrapText = (text, editing) => {
+            if(!editing) {
+                return (
+                    <p>{text}</p>
+                );
+            } else {
+                return (
+                    <p><textarea 
+                        type="text" 
+                        value={text} 
+                        onChange={this.handleCardUpdate}
+                    /></p>
+                )
+            }
+        }
+
         return (
             <div className={"list-group-item list-group-item-action flex-row align-items-start " + this.props.type.toLowerCase()}>
                 <small style={{textTransform: 'capitalize'}}>{this.props.type}</small>
-                <p className="mb-1">
-                    <textarea 
-                        type="text" 
-                        readOnly={!this.props.editing} 
-                        value={this.state.renderedText} 
-                        onChange={this.handleChange.bind(this)}
-                    /></p>
+                {wrapText(this.props.text, this.props.editing)}
             </div>
-        )
+        );
     }
+
 }
+
 
 export default Card;
