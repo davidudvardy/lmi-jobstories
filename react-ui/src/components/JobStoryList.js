@@ -7,26 +7,39 @@ class JobStoryList extends Component {
         this.handleJobUpdate = this.handleJobUpdate.bind(this);
     }
 
-    componentDidMount() {
-        document.getElementById("filter").oninput = this.handleFilterChange;
-    }
-
-    handleFilterChange = (event) => {
-        let list = this.props.getParentState().filteredJobStoryList;
-        let pattern = event.target.value.toLowerCase();
-        list = list.filter(job => job.context.toLowerCase().search(pattern) !== -1 || job.motivation.toLowerCase().search(pattern) !== -1 || job.outcome.toLowerCase().search(pattern) !== -1 );
-        this.props.setParentState({
-            renderedJobStoryList: list,
-        });
-    }
-
     handleJobUpdate(obj) {
-        console.log("Should update job:", obj.id, obj.type, obj.updatedText);
+        this.props.onJobUpdate(obj);
     }
 
     render() {
+        // Filter for categories first
+        let type = this.props.categoryFilter.type;
+        let category = this.props.categoryFilter.category;
+        let jobs = this.props.data;
+
+        switch (type) {
+            case 'product':
+                jobs = jobs.filter(function (job) {
+                    return job.product === category;
+                });
+                break;
+            case 'usertype':
+                jobs = jobs.filter(function (job) {
+                    return job.usertypes.includes(category);
+                });
+                break;
+            default:
+                // leave 'jobs' unaffected in any other cases
+        }
+
+        // Then filter for search term if present
+        if(this.props.searchFilter) {
+            let searchFilter = this.props.searchFilter.toLowerCase();
+            jobs = jobs.filter(job => job.context.toLowerCase().search(searchFilter) !== -1 || job.motivation.toLowerCase().search(searchFilter) !== -1 || job.outcome.toLowerCase().search(searchFilter) !== -1 );
+        }
+
         return (
-            this.props.data.map(job => (
+            jobs.map(job => (
                 <JobStory job={job} key={job.id} onJobUpdate={this.handleJobUpdate} />
             ))
         );
