@@ -12,7 +12,9 @@ class App extends Component {
       jobs: [],
       unsavedJob: {
         id: null,
-        originalText: "",
+        context: "",
+        motivation: "",
+        outcome: "",
       },
       categoryFilter: {
         type: "",
@@ -96,9 +98,11 @@ class App extends Component {
       this.setState({
         unsavedJob: {
           id: updatedJob.id,
-          originalText: jobs[updatedJobIndex][updatedJob.type],
-        }
-      });  
+          context: jobs[updatedJobIndex].context,
+          motivation: jobs[updatedJobIndex].motivation,
+          outcome: jobs[updatedJobIndex].outcome,
+        },
+      });
     }
     // Update data model in state
     jobs[updatedJobIndex][updatedJob.type] = updatedJob.updatedText;
