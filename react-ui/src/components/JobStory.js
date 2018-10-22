@@ -22,13 +22,13 @@ class JobStory extends Component {
         if(event.target.id == "discard") {
             this.setState({
                 editing: false
-                // TODO: probably the state change in itself will re-render the cards, and update their 'text' value with the one set from props above
+                // TODO: should call passed callback function to update jobs in state with original text stored in unsavedJob, clear unsavedJob.id afterwards
             });
         } else if(event.target.id == "save") {
             this.setState({
                 editing: false
             });
-            // TODO: besides setting state, we will need to update the job by calling the passed onJobUpdate function, to update data in parent
+            // TODO: should call passed callback function to clear unsavedJob.id in Apps and store affected job in DB (INSERT WHERE id=unsavedJob.id)
         }
     }
 

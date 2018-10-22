@@ -10,6 +10,10 @@ class App extends Component {
 
     this.state = {
       jobs: [],
+      unsavedJob: {
+        id: null,
+        originalText: "",
+      },
       categoryFilter: {
         type: "",
         category: "",
@@ -81,13 +85,23 @@ class App extends Component {
     });
   }
 
-  handleJobUpdate(obj) {
-    // TODO: save to DB somehow? What about save/discard?
+  handleJobUpdate(updatedJob) {
+    // TODO: save to DB somehow?
     let jobs = this.state.jobs;
-    jobs[
-      jobs.findIndex(job => { 
-        return job.id === obj.id 
-      })][obj.type] = obj.updatedText;
+    let updatedJobIndex = jobs.findIndex(job => { 
+      return job.id === updatedJob.id; 
+    });
+    // Store original text in state if we just started editing
+    if(this.state.unsavedJob.id == null) {
+      this.setState({
+        unsavedJob: {
+          id: updatedJob.id,
+          originalText: jobs[updatedJobIndex][updatedJob.type],
+        }
+      });  
+    }
+    // Update data model in state
+    jobs[updatedJobIndex][updatedJob.type] = updatedJob.updatedText;
     this.setState({
       jobs: jobs,
     });
