@@ -115,7 +115,7 @@ class App extends Component {
     // Check if there were any edits at all
     if(this.state.unsavedJob.id != null) {
       let {id, context, motivation, outcome} = this.state.unsavedJob;
-      if(action == "discard") {
+      if(action === "discard") {
         // Restore from unsavedJob to affected job
         let jobs = this.state.jobs;
         let updatedJobIndex = jobs.findIndex(job => { 
@@ -134,7 +134,7 @@ class App extends Component {
             outcome: "",
           },
         });
-      } else if(action == "save") {
+      } else if(action === "save") {
         // TODO: store affected job in DB (INSERT WHERE id=unsavedJob.id)
         // ???
         // Reset unsavedJob

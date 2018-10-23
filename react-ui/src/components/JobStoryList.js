@@ -15,7 +15,7 @@ class JobStoryList extends Component {
 
     componentDidUpdate() {
         // Update editable array in state once data is loaded
-        if(this.props.jobs.length > 0 && this.state.editable.length == 0) {
+        if(this.props.jobs.length > 0 && this.state.editable.length === 0) {
             let editable = new Array(this.props.jobs.length);
             this.props.jobs.forEach(job => {
                 editable[job.id] = true;
