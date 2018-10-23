@@ -34,3 +34,7 @@
   color: #000;
   background: rgb(255,250,230);
 }
+
+.hidden {
+  display: none;
+}

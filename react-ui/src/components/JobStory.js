@@ -4,32 +4,26 @@ import Card from './Card'
 class JobStory extends Component {
     constructor(props) {
         super(props);
-
         this.state = {
             editing: false
         }
-
         this.handleCardUpdate = this.handleCardUpdate.bind(this);
+        this.handleStartEditing = this.handleStartEditing.bind(this);
+        this.handleStopEditing = this.handleStopEditing.bind(this);
     }
 
-    handleStartEditing = (event) => {
+    handleStartEditing(event) {
+        this.props.onStartEditing(this.props.job.id);
         this.setState({
             editing: true
         });
     }
 
-    handleStopEditing = (event) => {
-        if(event.target.id == "discard") {
-            this.setState({
-                editing: false
-                // TODO: should call passed callback function to update jobs in state with original text stored in unsavedJob, clear unsavedJob.id afterwards
-            });
-        } else if(event.target.id == "save") {
-            this.setState({
-                editing: false
-            });
-            // TODO: should call passed callback function to clear unsavedJob.id in Apps and store affected job in DB (INSERT WHERE id=unsavedJob.id)
-        }
+    handleStopEditing(event) {
+        this.setState({
+            editing: false,
+        });
+        this.props.onStopEditing(event.target.id);
     }
 
     handleCardUpdate(obj) {
@@ -43,26 +37,27 @@ class JobStory extends Component {
                     jobId={this.props.job.id}
                     text={this.props.job.context}
                     type="context"
-                    editing={this.state.editing}
+                    editing={this.props.editable && this.state.editing}
                     onCardUpdate={this.handleCardUpdate}
                 />
                 <Card 
                     jobId={this.props.job.id}
                     text={this.props.job.motivation}
                     type="motivation"
-                    editing={this.state.editing}
+                    editing={this.props.editable && this.state.editing}
                     onCardUpdate={this.handleCardUpdate}
                 />
                 <Card 
                     jobId={this.props.job.id}
                     text={this.props.job.outcome}
                     type="outcome"
-                    editing={this.state.editing}
+                    editing={this.props.editable && this.state.editing}
                     onCardUpdate={this.handleCardUpdate}
                 />
-                <ToolsTab 
+                <ToolsTab
                     onStartEditing={this.handleStartEditing} 
                     onStopEditing={this.handleStopEditing} 
+                    visible={this.props.editable}
                     editing={this.state.editing} />
             </div>
         );
@@ -70,19 +65,23 @@ class JobStory extends Component {
 }
 
 const ToolsTab = (props) => {
-    if(props.editing) {
-        return (
-            <div>
-                <button id="save" onClick={props.onStopEditing}>Save</button>
-                <button id="discard" onClick={props.onStopEditing}>Discard</button>
-            </div>
-        );
+    if(props.visible) {
+        if(props.editing) {
+            return (
+                <div>
+                    <button id="save" onClick={props.onStopEditing}>Save</button>
+                    <button id="discard" onClick={props.onStopEditing}>Discard</button>
+                </div>
+            );
+        } else {
+            return (
+                <div>
+                    <button onClick={props.onStartEditing}>Edit</button>
+                </div>
+            );
+        }
     } else {
-        return (
-            <div>
-                <button onClick={props.onStartEditing}>Edit</button>
-            </div>
-        );
+        return (<div></div>);
     }
 }
 

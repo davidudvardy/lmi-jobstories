@@ -28,6 +28,7 @@ class App extends Component {
 
     this.handleFilterChange = this.handleFilterChange.bind(this);
     this.handleJobUpdate = this.handleJobUpdate.bind(this);
+    this.handleStopEditing = this.handleStopEditing.bind(this);
   }
 
   componentDidMount() {
@@ -88,7 +89,6 @@ class App extends Component {
   }
 
   handleJobUpdate(updatedJob) {
-    // TODO: save to DB somehow?
     let jobs = this.state.jobs;
     let updatedJobIndex = jobs.findIndex(job => { 
       return job.id === updatedJob.id; 
@@ -109,6 +109,45 @@ class App extends Component {
     this.setState({
       jobs: jobs,
     });
+  }
+
+  handleStopEditing(action) {
+    // Check if there were any edits at all
+    if(this.state.unsavedJob.id != null) {
+      let {id, context, motivation, outcome} = this.state.unsavedJob;
+      if(action == "discard") {
+        // Restore from unsavedJob to affected job
+        let jobs = this.state.jobs;
+        let updatedJobIndex = jobs.findIndex(job => { 
+          return job.id === id; 
+        });
+        jobs[updatedJobIndex].context = context;
+        jobs[updatedJobIndex].motivation = motivation;
+        jobs[updatedJobIndex].outcome = outcome;
+        // Store in state and reset unsavedJob
+        this.setState({
+          jobs: jobs,
+          unsavedJob: {
+            id: null,
+            context: "",
+            motivation: "",
+            outcome: "",
+          },
+        });
+      } else if(action == "save") {
+        // TODO: store affected job in DB (INSERT WHERE id=unsavedJob.id)
+        // ???
+        // Reset unsavedJob
+        this.setState({
+          unsavedJob: {
+            id: null,
+            context: "",
+            motivation: "",
+            outcome: "",
+          },
+        });
+      }
+    }
   }
 
   render() {
@@ -140,10 +179,12 @@ class App extends Component {
               <main role="main" className="col-md-9 ml-sm-auto col-lg-10 px-4">
                 <h2>Job Stories</h2>
                 <JobStoryList 
-                  data={jobs} 
+                  jobs={jobs} 
                   categoryFilter={categoryFilter} 
                   searchFilter={searchFilter}
-                  onJobUpdate={this.handleJobUpdate} />
+                  onJobUpdate={this.handleJobUpdate} 
+                  onStopEditing={this.handleStopEditing}
+                />
               </main>
             </div>
           </div>
