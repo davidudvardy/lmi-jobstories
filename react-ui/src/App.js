@@ -114,13 +114,15 @@ class App extends Component {
   handleStopEditing(action) {
     // Check if there were any edits at all
     if(this.state.unsavedJob.id != null) {
+      
       let {id, context, motivation, outcome} = this.state.unsavedJob;
+      let jobs = this.state.jobs;
+      let updatedJobIndex = jobs.findIndex(job => { 
+        return job.id === id; 
+      });
+
       if(action === "discard") {
         // Restore from unsavedJob to affected job
-        let jobs = this.state.jobs;
-        let updatedJobIndex = jobs.findIndex(job => { 
-          return job.id === id; 
-        });
         jobs[updatedJobIndex].context = context;
         jobs[updatedJobIndex].motivation = motivation;
         jobs[updatedJobIndex].outcome = outcome;
@@ -134,18 +136,39 @@ class App extends Component {
             outcome: "",
           },
         });
+
       } else if(action === "save") {
-        // TODO: store affected job in DB (INSERT WHERE id=unsavedJob.id)
-        // ???
-        // Reset unsavedJob
-        this.setState({
-          unsavedJob: {
-            id: null,
-            context: "",
-            motivation: "",
-            outcome: "",
+
+        // Call API with POST data containing fields
+        fetch('/api/jobstory-update/' + id, {
+          method: "PUT",
+          headers: {
+            'Content-type': 'application/json'
           },
-        });
+          body: JSON.stringify({
+            'context': jobs[updatedJobIndex].context,
+            'motivation': jobs[updatedJobIndex].motivation,
+            'outcome': jobs[updatedJobIndex].outcome
+          }),
+        })
+          .then(r => r.json())
+          .then(
+            (response) => {
+              // Reset unsavedJob
+              this.setState({
+                unsavedJob: {
+                  id: null,
+                  context: "",
+                  motivation: "",
+                  outcome: "",
+                },
+              });
+            },
+            (error) => {
+              console.log("Error:", error);
+            },
+          );
+
       }
     }
   }
