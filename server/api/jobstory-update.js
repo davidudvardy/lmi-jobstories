@@ -5,8 +5,7 @@ const { db } = require('../lib/database')
 var bodyParser = require('body-parser')
 router.use(bodyParser.json())
 
-// Serve job stories from API
-// Make sure that we only respond to /api/jobstory-update/123 like paths, with no '/' at the end
+// Update job story with jobId passed in path
 router.put('/api/jobstory-update/:jobId', (req, res) => {
     db
         .task(t => {
