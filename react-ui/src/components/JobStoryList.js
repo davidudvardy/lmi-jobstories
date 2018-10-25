@@ -4,26 +4,9 @@ import JobStory from './JobStory';
 class JobStoryList extends Component {
     constructor(props) {
         super(props);
-        // Store a model of all JobStories shown to track editability
-        this.state = {
-            editable: [],
-        };
         this.handleJobUpdate = this.handleJobUpdate.bind(this);
-        this.handleStopEditing = this.handleStopEditing.bind(this);
         this.handleStartEditing = this.handleStartEditing.bind(this);
-    }
-
-    componentDidUpdate() {
-        // Update editable array in state once data is loaded
-        if(this.props.jobs.length > 0 && this.state.editable.length === 0) {
-            let editable = new Array(this.props.jobs.length);
-            this.props.jobs.forEach(job => {
-                editable[job.id] = true;
-            });
-            this.setState({
-                editable: editable,
-            });
-        }
+        this.handleStopEditing = this.handleStopEditing.bind(this);
     }
 
     handleJobUpdate(obj) {
@@ -31,21 +14,10 @@ class JobStoryList extends Component {
     }
 
     handleStartEditing(editingId) {
-        // TODO: should set this.state.editable[] to false for all except findIndex(job.id)
-        let editable = this.state.editable;
-        editable.fill(false);
-        editable[editingId] = true;
-        this.setState({
-            editable: editable,
-        });
+        this.props.onStartEditing(editingId);
     }
 
     handleStopEditing(action) {
-        let editable = this.state.editable;
-        editable.fill(true);
-        this.setState({
-            editable: editable,
-        });
         this.props.onStopEditing(action);
     }
 
@@ -84,7 +56,7 @@ class JobStoryList extends Component {
                     onJobUpdate={this.handleJobUpdate}
                     onStartEditing={this.handleStartEditing}
                     onStopEditing={this.handleStopEditing}
-                    editable={this.state.editable[job.id]}
+                    editable={job.editable}
                 />
             ))
         );

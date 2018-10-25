@@ -13,10 +13,10 @@ class JobStory extends Component {
     }
 
     handleStartEditing(event) {
-        this.props.onStartEditing(this.props.job.id);
         this.setState({
             editing: true
         });
+        this.props.onStartEditing(this.props.job.id);
     }
 
     handleStopEditing(event) {
