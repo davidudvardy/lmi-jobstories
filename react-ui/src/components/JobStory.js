@@ -32,7 +32,7 @@ class JobStory extends Component {
 
     render() {
         return (
-            <div className="list-group flex-row" style={{marginBottom: 10 + 'px'}}>
+            <div className="">
                 <Card 
                     jobId={this.props.job.id}
                     text={this.props.job.context}

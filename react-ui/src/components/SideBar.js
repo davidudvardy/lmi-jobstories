@@ -4,23 +4,21 @@ import {NavLink} from 'react-router-dom';
 class SideBar extends Component {
     render () {
         return (
-            <nav className="col-md-2 d-none d-md-block bg-light sidebar">
-                <div className="sidebar-sticky">
-                    <ul className="nav flex-column">
-                        {this.props.data.map(product => (
-                            <li className="nav-item" key={product.key}>
-                                <NavLink to={'/product/' + product.key} activeClassName="selected">{product.title}</NavLink>
-                                <ul>
-                                    {product.usertypes.map(userType => (
-                                        <li className="nav-item" key={userType.key}>
-                                            <NavLink to={'/usertype/' + userType.key} activeClassName="selected">{userType.title}</NavLink>
-                                        </li>
-                                    ))}
-                                </ul>
-                            </li>
-                        ))}
-                    </ul>
-                </div>
+            <nav className="sidebar">
+                <ul className="sidebar-links">
+                    {this.props.data.map(product => (
+                        <li className="sidebar-item" key={product.key}>
+                            <NavLink to={'/product/' + product.key} activeClassName="selected">{product.title}</NavLink>
+                            <ul>
+                                {product.usertypes.map(userType => (
+                                    <li className="sidebar-item" key={userType.key}>
+                                        <NavLink to={'/usertype/' + userType.key} activeClassName="selected">{userType.title}</NavLink>
+                                    </li>
+                                ))}
+                            </ul>
+                        </li>
+                    ))}
+                </ul>
             </nav>
         );
     }

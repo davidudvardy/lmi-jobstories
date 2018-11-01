@@ -32,7 +32,7 @@ class Card extends Component {
         }
 
         return (
-            <div className={"list-group-item list-group-item-action flex-row align-items-start " + this.props.type.toLowerCase()}>
+            <div className={"card " + this.props.type.toLowerCase()}>
                 <small style={{textTransform: 'capitalize'}}>{this.props.type}</small>
                 {wrapText(this.props.text, this.props.editing)}
             </div>

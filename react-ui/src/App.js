@@ -227,19 +227,16 @@ class App extends Component {
     } else {
       return (
         <div>
-          <nav className="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
-            <Link id="home" className="navbar-brand col-sm-3 col-md-2 mr-0" to="/">Job Stories</Link>
+          <nav className="navbar">
+            <Link id="home" className="navbar-brand" to="/">Job Stories</Link>
             <input 
-              className="form-control form-control-dark w-100"
+              className=""
               id="filter" 
               type="text" 
               placeholder="Search job stories..." 
               onInput={this.handleFilterChange} 
               value={this.state.searchFilter}
             />
-            <ul className="navbar-nav px-3">
-              <li className="nav-item text-nowrap"><a className="nav-link">Sign out</a></li>
-            </ul>
           </nav>
           <div className="container-fluid">
             <div className="row">

@@ -2,25 +2,26 @@ A web app to store, edit and search job stories organized by products and user t
 
 ## TODO
 
-*The Road to v1.0:*
-- [ ] Simplified layout _not_ based on Bootstrap
+**The Road to v1.0:**
+- [ ] **Simplified layout _not_ based on Bootstrap**
+    - [ ] Simple typographic rules
     - [ ] Fixed navbar at top
     - [ ] Fixed, non-scrolling sidebar at left
     - [ ] Job stories as rows of cards
-- [ ] We will need a new view to display a single job story only
+- [ ] **We will need a new view to display a single job story only**
     - [ ] Prepare a UI view to display a single job story
     - [ ] Create a separate `route` containing job story `id` (what about pre-filtered URLs?)
     - [ ] Editing toolbar should only be displayed in the single job story view
-- [ ] Refined job story layout
+- [ ] **Refined job story layout**
     - [ ] Connecting containers with pointing right sides, shadow
-    - [ ] Special layout for single view:
+    - [ ] **Special layout for single view:**
         - [ ] Blocking bg layer
         - [ ] Edit btn
         - [ ] Close btn
         - [ ] Forces displayed above and below (first with mock data)
         - [ ] Forces stored and served from DB
         - [ ] Display product and usertypes as tags
-    - [ ] Special layout for editing view:
+    - [ ] **Special layout for editing view:**
         - [ ] New job story floating btn
         - [ ] Adjusted editing layout (separated cards)
         - [ ] Save & Dismiss btns
@@ -30,7 +31,7 @@ A web app to store, edit and search job stories organized by products and user t
         - [ ] Add new usertype
         - [ ] Remove usertype
 
-*Future feature ideas:*
+**Future feature ideas:**
 - Instant search in existing context/motivation/outcome cards while creating new (card spinner selector)
 - Ability to add videos with timecode
 - Authentication and sharing (add/remove editor accounts, anonymous link based sharing for viewing only, job story has author)
