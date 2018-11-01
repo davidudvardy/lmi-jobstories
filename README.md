@@ -1,5 +1,43 @@
 A web app to store, edit and search job stories organized by products and user types.
 
+## TODO
+
+*The Road to v1.0:*
+- [ ] Simplified layout _not_ based on Bootstrap
+    - [ ] Fixed navbar at top
+    - [ ] Fixed, non-scrolling sidebar at left
+    - [ ] Job stories as rows of cards
+- [ ] We will need a new view to display a single job story only
+    - [ ] Prepare a UI view to display a single job story
+    - [ ] Create a separate `route` containing job story `id` (what about pre-filtered URLs?)
+    - [ ] Editing toolbar should only be displayed in the single job story view
+- [ ] Refined job story layout
+    - [ ] Connecting containers with pointing right sides, shadow
+    - [ ] Special layout for single view:
+        - [ ] Blocking bg layer
+        - [ ] Edit btn
+        - [ ] Close btn
+        - [ ] Forces displayed above and below (first with mock data)
+        - [ ] Forces stored and served from DB
+        - [ ] Display product and usertypes as tags
+    - [ ] Special layout for editing view:
+        - [ ] New job story floating btn
+        - [ ] Adjusted editing layout (separated cards)
+        - [ ] Save & Dismiss btns
+        - [ ] Editable forces
+        - [ ] Add new force
+        - [ ] Define/Edit product
+        - [ ] Add new usertype
+        - [ ] Remove usertype
+
+*Future feature ideas:*
+- Instant search in existing context/motivation/outcome cards while creating new (card spinner selector)
+- Ability to add videos with timecode
+- Authentication and sharing (add/remove editor accounts, anonymous link based sharing for viewing only, job story has author)
+- Teams: editors belong to teams, can start serving external teams
+- Built-in tips to write job stories while editing
+- Stats for teams: most viewed products, job stories, authors, etc.
+
 ## Local development
 
 Figure out your [connection string](https://github.com/iceddev/pg-connection-string) to your postgres instance. You'll need it at step `4`. Check https://postgresapp.com/ if you want to install Postgres to your Mac. 
@@ -10,7 +48,7 @@ Figure out your [connection string](https://github.com/iceddev/pg-connection-str
 4. `echo DATABASE_URL=postgres://dudvardy@localhost:5432/lmi-jobstories >> server/.env`  
 5. `npm run start:dev`
 
-Now you have the Create React App -app running in `http://localhost:3000/` and the API server running in `http://localhost:4000`. 
+Now you have the Create React App running at `http://localhost:3000/` and the API server running at `http://localhost:4000`. 
 
 ### How does this work?
 
@@ -19,13 +57,13 @@ CRA has a fabulous built-in live reload. Go and check their [readme](https://git
 The CRA is proxying requests to API server. Check the `proxy` config from `react-ui/package.json` and the relevant [section in readme](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#proxying-api-requests-in-development).
 
 
-## Heroku deployments
+## Heroku deployment
 
-1. `heroku create lmi-jobstories`
+1. `heroku create jobstories`
 2. `heroku addons:create heroku-postgresql:hobby-dev`
-3. `heroku git:remote lmi-jobstories`
+3. `heroku git:remote jobstories`
 4. `git push heroku master`
 
-Now you have the software running in `https://lmi-jobstories.herokuapps.com/`. It is running in production mode. Open your browser and check the logs with `heroku logs`.
+Now you have the software running in `https://jobstories.herokuapps.com/`. It is running in production mode. Open your browser and check the logs with `heroku logs`.
 
 Your database has been initialized by running sql migrations from `server/postgrator`.
