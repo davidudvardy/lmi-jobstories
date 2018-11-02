@@ -3,11 +3,11 @@ A web app to store, edit and search job stories organized by products and user t
 ## TODO
 
 **The Road to v1.0:**
-- [ ] **Simplified layout _not_ based on Bootstrap**
-    - [ ] Simple typographic rules
-    - [ ] Fixed navbar at top
-    - [ ] Fixed, non-scrolling sidebar at left
-    - [ ] Job stories as rows of cards
+- [x] **Simplified layout _not_ based on Bootstrap**
+    - [x] Simple typographic rules
+    - [x] Fixed navbar at top
+    - [x] Fixed, non-scrolling sidebar at left
+    - [x] Job stories as rows of cards
 - [ ] **We will need a new view to display a single job story only**
     - [ ] Prepare a UI view to display a single job story
     - [ ] Create a separate `route` containing job story `id` (what about pre-filtered URLs?)
@@ -18,11 +18,11 @@ A web app to store, edit and search job stories organized by products and user t
         - [ ] Blocking bg layer
         - [ ] Edit btn
         - [ ] Close btn
-        - [ ] Forces displayed above and below (first with mock data)
+        - [ ] Forces displayed below (first with mock data)
         - [ ] Forces stored and served from DB
         - [ ] Display product and usertypes as tags
     - [ ] **Special layout for editing view:**
-        - [ ] New job story floating btn
+        - [x] New job story floating btn
         - [ ] Adjusted editing layout (separated cards)
         - [ ] Save & Dismiss btns
         - [ ] Editable forces
