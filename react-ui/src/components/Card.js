@@ -33,7 +33,7 @@ class Card extends Component {
 
         return (
             <div className={"card " + this.props.type.toLowerCase()}>
-                <small style={{textTransform: 'capitalize'}}>{this.props.type}</small>
+                <h2>{this.props.type}</h2>
                 {wrapText(this.props.text, this.props.editing)}
             </div>
         );

@@ -32,7 +32,7 @@ class JobStory extends Component {
 
     render() {
         return (
-            <div className="">
+            <section className={this.state.editing ? 'editing' : ''}>
                 <Card 
                     jobId={this.props.job.id}
                     text={this.props.job.context}
@@ -59,7 +59,7 @@ class JobStory extends Component {
                     onStopEditing={this.handleStopEditing} 
                     visible={this.props.editable}
                     editing={this.state.editing} />
-            </div>
+            </section>
         );
     }
 }
@@ -68,14 +68,14 @@ const ToolsTab = (props) => {
     if(props.visible) {
         if(props.editing) {
             return (
-                <div>
+                <div className="toolstab">
                     <button id="save" onClick={props.onStopEditing}>Save</button>
                     <button id="discard" onClick={props.onStopEditing}>Discard</button>
                 </div>
             );
         } else {
             return (
-                <div>
+                <div className="toolstab">
                     <button onClick={props.onStartEditing}>Edit</button>
                 </div>
             );

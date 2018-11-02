@@ -226,9 +226,9 @@ class App extends Component {
       return (<h5>Loading data...</h5>);
     } else {
       return (
-        <div>
-          <nav className="navbar">
-            <Link id="home" className="navbar-brand" to="/">Job Stories</Link>
+        <div className="container">
+          <header>
+            <Link id="home" className="brand" to="/"><span>Job Stories</span></Link>
             <input 
               className=""
               id="filter" 
@@ -237,24 +237,20 @@ class App extends Component {
               onInput={this.handleFilterChange} 
               value={this.state.searchFilter}
             />
-          </nav>
-          <div className="container-fluid">
-            <div className="row">
-              <SideBar data={productData} />
-              <main role="main" className="col-md-9 ml-sm-auto col-lg-10 px-4">
-                <h2>Job Stories</h2>
-                <button id="add" onClick={this.handleAddJob}>Add job story</button>
-                <JobStoryList 
-                  jobs={jobs} 
-                  categoryFilter={categoryFilter} 
-                  searchFilter={searchFilter}
-                  onJobUpdate={this.handleJobUpdate} 
-                  onStartEditing={this.handleStartEditing}
-                  onStopEditing={this.handleStopEditing}
-                />
-              </main>
-            </div>
-          </div>
+          </header>
+          <SideBar data={productData} />
+          <main>
+            <h1>Job Stories</h1>
+            <button id="add" onClick={this.handleAddJob}><span>Add job story</span></button>
+            <JobStoryList 
+              jobs={jobs} 
+              categoryFilter={categoryFilter} 
+              searchFilter={searchFilter}
+              onJobUpdate={this.handleJobUpdate} 
+              onStartEditing={this.handleStartEditing}
+              onStopEditing={this.handleStopEditing}
+            />
+          </main>
         </div>
       );
     }
