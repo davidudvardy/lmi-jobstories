@@ -65,7 +65,7 @@ class JobStory extends Component {
                     onCardUpdate={this.handleCardUpdate}
                 />
                 {this.props.selected && 
-                    <ToolsTab
+                    <Toolbar
                         onStartEditing={this.handleStartEditing} 
                         onStopEditing={this.handleStopEditing} 
                         editing={this.state.editing} />
@@ -85,18 +85,18 @@ class JobStory extends Component {
     }
 }
 
-const ToolsTab = (props) => {
+const Toolbar = (props) => {
     if(props.editing) {
         return (
-            <div className="toolstab">
-                <button id="save" onClick={props.onStopEditing}>Save</button>
-                <button id="discard" onClick={props.onStopEditing}>Discard</button>
+            <div className="toolbar">
+                <button id="save" className="button button-primary" onClick={props.onStopEditing}>Save</button>
+                <button id="discard" className="button button-secondary" onClick={props.onStopEditing}>Discard</button>
             </div>
         );
     } else {
         return (
-            <div className="toolstab">
-                <button onClick={props.onStartEditing}>Edit</button>
+            <div className="toolbar">
+                <button className="button button-secondary" onClick={props.onStartEditing}>Edit</button>
             </div>
         );
     }
