@@ -9,22 +9,22 @@ A web app to store, edit and search job stories organized by products and user t
     - [x] Fixed, non-scrolling sidebar at left
     - [x] Job stories as rows of cards
 - [ ] **We will need a new view to display a single job story only**
-    - [ ] Prepare a UI view to display a single job story
-    - [ ] Create a separate `route` containing job story `id` (what about pre-filtered URLs?)
-    - [ ] Editing toolbar should only be displayed in the single job story view
+    - [x] Prepare a UI view to display a single job story
+    - [x] Create a separate `route` containing job story `id` (what about pre-filtered URLs?)
+    - [x] Editing toolbar should only be displayed in the single job story view
 - [ ] **Refined job story layout**
-    - [ ] Connecting containers with pointing right sides, shadow
+    - [ ] Breadcrumbs divider
     - [ ] **Special layout for single view:**
-        - [ ] Blocking bg layer
-        - [ ] Edit btn
-        - [ ] Close btn
+        - [x] Blocking bg layer
+        - [x] Edit btn
+        - [x] Close btn
         - [ ] Forces displayed below (first with mock data)
         - [ ] Forces stored and served from DB
         - [ ] Display product and usertypes as tags
     - [ ] **Special layout for editing view:**
         - [x] New job story floating btn
         - [ ] Adjusted editing layout (separated cards)
-        - [ ] Save & Dismiss btns
+        - [x] Save & Dismiss btns
         - [ ] Editable forces
         - [ ] Add new force
         - [ ] Define/Edit product

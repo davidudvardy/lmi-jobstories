@@ -28,7 +28,6 @@ class App extends Component {
 
     this.handleFilterChange = this.handleFilterChange.bind(this);
     this.handleJobUpdate = this.handleJobUpdate.bind(this);
-    this.handleStartEditing = this.handleStartEditing.bind(this);
     this.handleStopEditing = this.handleStopEditing.bind(this);
     this.handleAddJob = this.handleAddJob.bind(this);
   }
@@ -39,10 +38,6 @@ class App extends Component {
       .then(r => r.json())
       .then(
         (jobStoriesData) => {
-          // Additional property to store if JobStory can show editing toolbar
-          for(let key of jobStoriesData.keys()) {
-            jobStoriesData[key].editable = true;
-          }
           this.setState({
             jobs: jobStoriesData,
             isLoaded: true,
@@ -117,26 +112,7 @@ class App extends Component {
     });
   }
 
-  handleStartEditing(editingId) {
-    let jobs = this.state.jobs;
-    for(let key of jobs.keys()) {
-      jobs[key].editable = (jobs[key].id === editingId) ? true : false;
-    }
-    this.setState({
-      jobs: jobs,
-    });
-  }
-
   handleStopEditing(action) {
-    // Reset editable props in state to true, so toolbar is shown
-    let jobs = this.state.jobs;
-    for(let key of jobs.keys()) {
-      jobs[key].editable = true;
-    }
-    this.setState({
-      jobs: jobs,
-    });
-
     // Check if there were any edits at all
     if(this.state.unsavedJob.id != null) {
       
@@ -210,8 +186,7 @@ class App extends Component {
       product: "bold360",
       usertypes: [
         "bold360-end-user"
-      ],
-      editable: true
+      ]
     });
     this.setState({
       jobs: jobs,
@@ -247,7 +222,6 @@ class App extends Component {
               categoryFilter={categoryFilter} 
               searchFilter={searchFilter}
               onJobUpdate={this.handleJobUpdate} 
-              onStartEditing={this.handleStartEditing}
               onStopEditing={this.handleStopEditing}
             />
           </main>

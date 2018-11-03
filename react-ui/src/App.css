@@ -61,12 +61,34 @@ section {
   display: flex;
   max-width: 820px;
   margin: 0 0 60px 0;
+  transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+section.selected {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  max-width: 100%;
+  margin: 0;
+  z-index: 1000;
+  background-color: rgba(255, 255, 255, 0.94);
+  padding: 60px;
 }
 
 #add {
   position: fixed;
   bottom: 40px;
   right: 40px;
+  width: 64px;
+  height: 64px;
+}
+
+#close {
+  position: fixed;
+  top: 20px;
+  right: 20px;
   width: 64px;
   height: 64px;
 }
@@ -81,16 +103,6 @@ section:hover {
   flex: 1;
   margin-right: 20px;
   min-width: 200px;
-}
-
-.toolstab {
-/*  display: none;*/
-  visibility: hidden;
-}
-
-section:hover .toolstab,
-section.editing .toolstab {
-  visibility: visible;
 }
 
 
@@ -182,6 +194,11 @@ a.selected::before {
   color: #333;
 }
 
+.card a {
+  text-decoration: none;
+  color: #333;
+}
+
 #add {
   border-radius: 50%;
   border: 0 none transparent;
@@ -212,6 +229,39 @@ a.selected::before {
   top: calc((64px - 2px) / 2);
   height: 2px;
   width: 24px;
+}
+
+#close {
+  border-radius: 50%;
+  border: 0 none transparent;
+  padding: 0;
+  margin: 0;
+  background-color: white;
+}
+
+#close span {
+  display: none;
+}
+
+#close:before {
+  background: #ccc;
+  content: "";
+  position: absolute;
+  left: calc((64px - 2px) / 2);
+  top: calc((64px - 24px) / 2);
+  height: 24px;
+  width: 2px;
+  transform: rotate(45deg);
+}
+#close:after {
+  background: #ccc;
+  content: "";
+  position: absolute;
+  left: calc((64px - 24px) / 2);
+  top: calc((64px - 2px) / 2);
+  height: 2px;
+  width: 24px;
+  transform: rotate(45deg);
 }
 
 /* Header */
@@ -260,10 +310,4 @@ header input[type=text] {
 header input[type=text]:focus {
   background-color: rgba(255, 255, 255, 1);
   color: #666;
-}
-
-
-
-.hidden {
-  display: none;
 }

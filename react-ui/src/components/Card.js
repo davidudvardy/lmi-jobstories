@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import {Link} from 'react-router-dom';
 
 class Card extends Component {
     constructor(props) {
@@ -18,7 +19,7 @@ class Card extends Component {
         let wrapText = (text, editing) => {
             if(!editing) {
                 return (
-                    <p>{text}</p>
+                    <p><Link to={'?job=' + this.props.jobId}>{text}</Link></p>
                 );
             } else {
                 return (

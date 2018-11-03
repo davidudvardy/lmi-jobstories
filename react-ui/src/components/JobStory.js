@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
-import Card from './Card'
+import { withRouter } from 'react-router-dom';
+import Card from './Card';
 
 class JobStory extends Component {
     constructor(props) {
@@ -10,13 +11,13 @@ class JobStory extends Component {
         this.handleCardUpdate = this.handleCardUpdate.bind(this);
         this.handleStartEditing = this.handleStartEditing.bind(this);
         this.handleStopEditing = this.handleStopEditing.bind(this);
+        this.handleCloseJobStory = this.handleCloseJobStory.bind(this);
     }
 
-    handleStartEditing(event) {
+    handleStartEditing() {
         this.setState({
             editing: true
         });
-        this.props.onStartEditing(this.props.job.id);
     }
 
     handleStopEditing(event) {
@@ -30,60 +31,76 @@ class JobStory extends Component {
         this.props.onJobUpdate(obj);
     }
 
+    handleCloseJobStory() {
+        // Go to URL with no searchParams to close selected job
+        this.props.history.push(new URL(document.URL).pathname);
+    }
+
     render() {
+        let sectionClassNames = '';
+        sectionClassNames += this.state.editing ? ' editing' : '';
+        sectionClassNames += this.props.selected ? ' selected' : '';
+
         return (
-            <section className={this.state.editing ? 'editing' : ''}>
+            <section className={sectionClassNames}>
                 <Card 
                     jobId={this.props.job.id}
                     text={this.props.job.context}
                     type="context"
-                    editing={this.props.editable && this.state.editing}
+                    editing={this.state.editing}
                     onCardUpdate={this.handleCardUpdate}
                 />
                 <Card 
                     jobId={this.props.job.id}
                     text={this.props.job.motivation}
                     type="motivation"
-                    editing={this.props.editable && this.state.editing}
+                    editing={this.state.editing}
                     onCardUpdate={this.handleCardUpdate}
                 />
                 <Card 
                     jobId={this.props.job.id}
                     text={this.props.job.outcome}
                     type="outcome"
-                    editing={this.props.editable && this.state.editing}
+                    editing={this.state.editing}
                     onCardUpdate={this.handleCardUpdate}
                 />
-                <ToolsTab
-                    onStartEditing={this.handleStartEditing} 
-                    onStopEditing={this.handleStopEditing} 
-                    visible={this.props.editable}
-                    editing={this.state.editing} />
+                {this.props.selected && 
+                    <ToolsTab
+                        onStartEditing={this.handleStartEditing} 
+                        onStopEditing={this.handleStopEditing} 
+                        editing={this.state.editing} />
+                }
+                {this.props.selected && 
+                    <button id="close" onClick={this.handleCloseJobStory}>
+                        <span>Close</span>
+                    </button>
+                }
+                {this.props.selected && 
+                    <div id="forces">
+                        Forces
+                    </div>
+                }
             </section>
         );
     }
 }
 
 const ToolsTab = (props) => {
-    if(props.visible) {
-        if(props.editing) {
-            return (
-                <div className="toolstab">
-                    <button id="save" onClick={props.onStopEditing}>Save</button>
-                    <button id="discard" onClick={props.onStopEditing}>Discard</button>
-                </div>
-            );
-        } else {
-            return (
-                <div className="toolstab">
-                    <button onClick={props.onStartEditing}>Edit</button>
-                </div>
-            );
-        }
+    if(props.editing) {
+        return (
+            <div className="toolstab">
+                <button id="save" onClick={props.onStopEditing}>Save</button>
+                <button id="discard" onClick={props.onStopEditing}>Discard</button>
+            </div>
+        );
     } else {
-        return (<div></div>);
+        return (
+            <div className="toolstab">
+                <button onClick={props.onStartEditing}>Edit</button>
+            </div>
+        );
     }
 }
 
 
-export default JobStory;
+export default withRouter(JobStory);

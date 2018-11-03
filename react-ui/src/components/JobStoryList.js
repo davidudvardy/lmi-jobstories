@@ -5,16 +5,11 @@ class JobStoryList extends Component {
     constructor(props) {
         super(props);
         this.handleJobUpdate = this.handleJobUpdate.bind(this);
-        this.handleStartEditing = this.handleStartEditing.bind(this);
         this.handleStopEditing = this.handleStopEditing.bind(this);
     }
 
     handleJobUpdate(obj) {
         this.props.onJobUpdate(obj);
-    }
-
-    handleStartEditing(editingId) {
-        this.props.onStartEditing(editingId);
     }
 
     handleStopEditing(action) {
@@ -54,9 +49,8 @@ class JobStoryList extends Component {
                     job={job} 
                     key={job.id} 
                     onJobUpdate={this.handleJobUpdate}
-                    onStartEditing={this.handleStartEditing}
                     onStopEditing={this.handleStopEditing}
-                    editable={job.editable}
+                    selected={job.id == new URL(document.URL).searchParams.get('job')}
                 />
             ))
         );
