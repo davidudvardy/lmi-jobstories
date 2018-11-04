@@ -8,7 +8,7 @@ A web app to store, edit and search job stories organized by products and user t
     - [x] Fixed navbar at top
     - [x] Fixed, non-scrolling sidebar at left
     - [x] Job stories as rows of cards
-- [ ] **We will need a new view to display a single job story only**
+- [x] **We will need a new view to display a single job story only**
     - [x] Prepare a UI view to display a single job story
     - [x] Create a separate `route` containing job story `id` (what about pre-filtered URLs?)
     - [x] Editing toolbar should only be displayed in the single job story view
