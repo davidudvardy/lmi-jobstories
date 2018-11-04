@@ -77,7 +77,14 @@ class JobStory extends Component {
                 }
                 {this.props.selected && 
                     <div id="forces">
-                        Forces
+                        {this.props.job.forces.map(force => (
+                            <div 
+                                id={'force' + force.key} 
+                                className={force.direction}
+                            >
+                                {force.description}
+                            </div>
+                        ))}
                     </div>
                 }
             </section>
