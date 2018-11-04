@@ -87,11 +87,6 @@ section {
   max-width: 300px;
 }
 
-#forces {
-  flex: 3;
-  min-width: 80%;
-}
-
 /* Jobstory Modal */
 
 section.selected {
@@ -103,7 +98,7 @@ section.selected {
   max-width: 100%;
   margin: 0;
   z-index: 1000;
-  background-color: rgba(255, 255, 255, 0.96);
+  background-color: rgba(255, 255, 255, 0.97);
   padding: 60px;
 }
 
@@ -114,8 +109,13 @@ section.selected {
 
 .toolbar {
   position: fixed;
-  bottom: 36px;
+  height: 48px;
+  bottom: 30px;
+  left: 30px;
   right: 20px;
+  background-image: url('/logo-gray.svg');
+  background-repeat: no-repeat;
+  text-align: right;
 }
 
 #close {
@@ -124,6 +124,17 @@ section.selected {
   right: 20px;
   width: 64px;
   height: 64px;
+}
+
+#forces {
+  flex: 3;
+  display: flex;
+  min-width: 80%;
+}
+
+#positiveForces,
+#negativeForces {
+  flex: 1;
 }
 
 
@@ -208,8 +219,7 @@ a.selected::before {
   display: none;
 }
 
-.card p,
-.card textarea {
+p, textarea {
   font-family: 'Lora', serif;
   font-size: 16pt;
   line-height: 21pt;

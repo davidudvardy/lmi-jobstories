@@ -18,7 +18,7 @@ A web app to store, edit and search job stories organized by products and user t
         - [x] Blocking bg layer
         - [x] Edit btn
         - [x] Close btn
-        - [ ] Forces displayed below (first with mock data)
+        - [x] Forces displayed below (first with mock data)
         - [x] Forces stored and served from DB
         - [ ] Product and usertypes shown as tags
     - [ ] **Special layout for editing view:**

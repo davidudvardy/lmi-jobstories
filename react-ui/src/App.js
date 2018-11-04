@@ -186,6 +186,18 @@ class App extends Component {
       product: "bold360",
       usertypes: [
         "bold360-end-user"
+      ],
+      forces: [
+        {
+          key: 1,
+          description: "Positive force",
+          direction: "positive"
+        },
+        {
+          key: 2,
+          description: "Negative force",
+          direction: "negative"
+        }
       ]
     });
     this.setState({
@@ -196,9 +208,9 @@ class App extends Component {
   render() {
     const {jobs, categoryFilter, searchFilter, productData, isLoaded, error} = this.state;
     if(error) {
-      return (<h5>Error loading JSON data: {error.message}</h5>);
+      return (<h1>Error loading JSON data: {error.message}</h1>);
     } else if (!isLoaded) {
-      return (<h5>Loading data...</h5>);
+      return (<h1>Loading data...</h1>);
     } else {
       return (
         <div className="container">

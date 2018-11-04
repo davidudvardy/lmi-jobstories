@@ -19,15 +19,23 @@ class Card extends Component {
         let wrapText = (text, editing) => {
             if(!editing) {
                 return (
-                    <p><Link to={'?job=' + this.props.jobId}>{text}</Link></p>
+                    <p>
+                        <Link 
+                            to={'?job=' + this.props.jobId}
+                        >
+                            {text}
+                        </Link>
+                    </p>
                 );
             } else {
                 return (
-                    <p><textarea 
-                        type="text" 
-                        value={text} 
-                        onChange={this.handleCardUpdate}
-                    /></p>
+                    <p>
+                        <textarea 
+                            type="text" 
+                            value={text} 
+                            onChange={this.handleCardUpdate}
+                        />
+                    </p>
                 )
             }
         }

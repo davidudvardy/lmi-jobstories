@@ -32,6 +32,13 @@ class JobStory extends Component {
     }
 
     handleCloseJobStory() {
+        // Invoke editing stop handler with discard to finish editing on close
+        let obj = {
+            target: {
+                id: 'discard'
+            }
+        };
+        this.handleStopEditing(obj);
         // Go to URL with no searchParams to close selected job
         this.props.history.push(new URL(document.URL).pathname);
     }
@@ -40,6 +47,13 @@ class JobStory extends Component {
         let sectionClassNames = '';
         sectionClassNames += this.state.editing ? ' editing' : '';
         sectionClassNames += this.props.selected ? ' selected' : '';
+
+        let positiveForces = this.props.job.forces.filter(function (force) {
+            return force.direction === 'positive';
+        });
+        let negativeForces = this.props.job.forces.filter(function(force) {
+            return force.direction === 'negative';
+        });
 
         return (
             <section className={sectionClassNames}>
@@ -77,14 +91,20 @@ class JobStory extends Component {
                 }
                 {this.props.selected && 
                     <div id="forces">
-                        {this.props.job.forces.map(force => (
-                            <div 
-                                id={'force' + force.key} 
-                                className={force.direction}
-                            >
-                                {force.description}
-                            </div>
-                        ))}
+                    <div id="positiveForces">
+                            {positiveForces.map(force => (
+                                <div>
+                                    <p>{force.description}</p>
+                                </div>
+                            ))}
+                        </div>
+                        <div id="negativeForces">
+                            {negativeForces.map(force => (
+                                <div>
+                                    <p>{force.description}</p>
+                                </div>
+                            ))}
+                        </div>
                     </div>
                 }
             </section>
