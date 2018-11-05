@@ -454,16 +454,21 @@ header input[type=text]:focus {
 
   .cards {
     flex-direction: column;
+    margin-bottom: 30px;
   }
 
   .card {
-    padding: 0 0 20px 0;
+    padding: 0;
     min-width: 100%;
     max-width: 100%;
   }
 
   .selected .card {
     padding: 0;
+  }
+
+  .card p {
+    margin: 0 0 20px 0;
   }
 
   p, textarea {
