@@ -57,56 +57,60 @@ class JobStory extends Component {
 
         return (
             <section className={sectionClassNames}>
-                <Card 
-                    jobId={this.props.job.id}
-                    text={this.props.job.context}
-                    type="context"
-                    editing={this.state.editing}
-                    onCardUpdate={this.handleCardUpdate}
-                />
-                <Card 
-                    jobId={this.props.job.id}
-                    text={this.props.job.motivation}
-                    type="motivation"
-                    editing={this.state.editing}
-                    onCardUpdate={this.handleCardUpdate}
-                />
-                <Card 
-                    jobId={this.props.job.id}
-                    text={this.props.job.outcome}
-                    type="outcome"
-                    editing={this.state.editing}
-                    onCardUpdate={this.handleCardUpdate}
-                />
-                {this.props.selected && 
-                    <Toolbar
-                        onStartEditing={this.handleStartEditing} 
-                        onStopEditing={this.handleStopEditing} 
-                        editing={this.state.editing} />
-                }
-                {this.props.selected && 
-                    <button id="close" onClick={this.handleCloseJobStory}>
-                        <span>Close</span>
-                    </button>
-                }
-                {this.props.selected && 
-                    <div id="forces">
-                    <div id="positiveForces">
-                            {positiveForces.map(force => (
-                                <div>
-                                    <p>{force.description}</p>
-                                </div>
-                            ))}
-                        </div>
-                        <div id="negativeForces">
-                            {negativeForces.map(force => (
-                                <div>
-                                    <p>{force.description}</p>
-                                </div>
-                            ))}
-                        </div>
+                <div className="cards">
+                    <Card 
+                        jobId={this.props.job.id}
+                        text={this.props.job.context}
+                        type="context"
+                        editing={this.state.editing}
+                        onCardUpdate={this.handleCardUpdate}
+                    />
+                    <Card 
+                        jobId={this.props.job.id}
+                        text={this.props.job.motivation}
+                        type="motivation"
+                        editing={this.state.editing}
+                        onCardUpdate={this.handleCardUpdate}
+                    />
+                    <Card 
+                        jobId={this.props.job.id}
+                        text={this.props.job.outcome}
+                        type="outcome"
+                        editing={this.state.editing}
+                        onCardUpdate={this.handleCardUpdate}
+                    />
+                </div>
+            {this.props.selected && 
+                <div className="forces">
+                    <div className="positiveForces">
+                        <h2>Aids, Supports</h2>
+                        {positiveForces.map(force => (
+                            <div>
+                                <p>{force.description}</p>
+                            </div>
+                        ))}
                     </div>
-                }
+                    <div className="negativeForces">
+                        <h2>Obstacles, Fears, Anxieties</h2>
+                        {negativeForces.map(force => (
+                            <div>
+                                <p>{force.description}</p>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            }
+            {this.props.selected && 
+                <Toolbar
+                    onStartEditing={this.handleStartEditing} 
+                    onStopEditing={this.handleStopEditing} 
+                    editing={this.state.editing} />
+            }
+            {this.props.selected && 
+                <button id="close" onClick={this.handleCloseJobStory}>
+                    <span>Close</span>
+                </button>
+            }
             </section>
         );
     }
