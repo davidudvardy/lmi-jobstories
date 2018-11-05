@@ -48,12 +48,17 @@ class JobStory extends Component {
         sectionClassNames += this.state.editing ? ' editing' : '';
         sectionClassNames += this.props.selected ? ' selected' : '';
 
-        let positiveForces = this.props.job.forces.filter(function (force) {
-            return force.direction === 'positive';
-        });
-        let negativeForces = this.props.job.forces.filter(function(force) {
-            return force.direction === 'negative';
-        });
+        //console.log(this.props.job.forces);
+        let positiveForces = [];
+        let negativeForces = [];
+        if(this.props.job.forces) {
+            positiveForces = this.props.job.forces.filter(function (force) {
+                return force.direction === 'positive';
+            });
+            negativeForces = this.props.job.forces.filter(function(force) {
+                return force.direction === 'negative';
+            });
+        }
 
         return (
             <section className={sectionClassNames}>
