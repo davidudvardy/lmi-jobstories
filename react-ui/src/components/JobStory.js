@@ -90,7 +90,7 @@ class JobStory extends Component {
                     <div className="positiveForces">
                         <h2>Aids, Supports</h2>
                         {positiveForces.map(force => (
-                            <div>
+                            <div key={'force' + force.key}>
                                 <p>{force.description}</p>
                             </div>
                         ))}
@@ -98,7 +98,7 @@ class JobStory extends Component {
                     <div className="negativeForces">
                         <h2>Obstacles, Fears, Anxieties</h2>
                         {negativeForces.map(force => (
-                            <div>
+                            <div key={'force' + force.key}>
                                 <p>{force.description}</p>
                             </div>
                         ))}

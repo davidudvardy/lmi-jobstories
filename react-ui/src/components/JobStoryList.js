@@ -40,7 +40,13 @@ class JobStoryList extends Component {
         // Then filter for search term if present
         if(this.props.searchFilter) {
             let searchFilter = this.props.searchFilter.toLowerCase();
-            jobs = jobs.filter(job => job.context.toLowerCase().search(searchFilter) !== -1 || job.motivation.toLowerCase().search(searchFilter) !== -1 || job.outcome.toLowerCase().search(searchFilter) !== -1 );
+            jobs = jobs.filter(function (job) {
+                let forces_str = '';
+                job.forces.map(function(force) {
+                    forces_str += force.description.toLowerCase() + ' ';
+                });
+                return job.context.toLowerCase().search(searchFilter) !== -1 || job.motivation.toLowerCase().search(searchFilter) !== -1 || job.outcome.toLowerCase().search(searchFilter) !== -1 || forces_str.search(searchFilter) !== -1;
+            });
         }
 
         return (
