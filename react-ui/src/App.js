@@ -15,6 +15,7 @@ class App extends Component {
         context: "",
         motivation: "",
         outcome: "",
+        forces: [],
       },
       categoryFilter: {
         type: "",
@@ -92,8 +93,9 @@ class App extends Component {
   handleJobUpdate(updatedJob) {
     let jobs = this.state.jobs;
     let updatedJobIndex = jobs.findIndex(job => { 
-      return job.id === updatedJob.id; 
+      return job.id === updatedJob.id;
     });
+
     // Store original text in state if we just started editing
     if(this.state.unsavedJob.id == null) {
       this.setState({
@@ -102,11 +104,21 @@ class App extends Component {
           context: jobs[updatedJobIndex].context,
           motivation: jobs[updatedJobIndex].motivation,
           outcome: jobs[updatedJobIndex].outcome,
+          forces: JSON.parse(JSON.stringify(jobs[updatedJobIndex].forces)),
         },
       });
     }
+
     // Update data model in state
-    jobs[updatedJobIndex][updatedJob.type] = updatedJob.updatedText;
+    if(updatedJob.type === 'force') {
+        let updatedForceIndex = jobs[updatedJobIndex].forces.findIndex(force => { 
+          return force.id === updatedJob.forceId;
+        });
+        jobs[updatedJobIndex].forces[updatedForceIndex].description = updatedJob.updatedText;
+    } else {
+      jobs[updatedJobIndex][updatedJob.type] = updatedJob.updatedText;
+    }
+
     this.setState({
       jobs: jobs,
     });
@@ -116,7 +128,7 @@ class App extends Component {
     // Check if there were any edits at all
     if(this.state.unsavedJob.id != null) {
       
-      let {id, context, motivation, outcome} = this.state.unsavedJob;
+      let {id, context, motivation, outcome, forces} = this.state.unsavedJob;
       let jobs = this.state.jobs;
       let updatedJobIndex = jobs.findIndex(job => { 
         return job.id === id; 
@@ -127,6 +139,7 @@ class App extends Component {
         jobs[updatedJobIndex].context = context;
         jobs[updatedJobIndex].motivation = motivation;
         jobs[updatedJobIndex].outcome = outcome;
+        jobs[updatedJobIndex].forces = forces;
         // Store in state and reset unsavedJob
         this.setState({
           jobs: jobs,
@@ -135,6 +148,7 @@ class App extends Component {
             context: "",
             motivation: "",
             outcome: "",
+            forces: [],
           },
         });
 

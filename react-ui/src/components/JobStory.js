@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import { withRouter } from 'react-router-dom';
 import Card from './Card';
+import Force from './Force';
 
 class JobStory extends Component {
     constructor(props) {
@@ -90,17 +91,27 @@ class JobStory extends Component {
                     <div className="positiveForces">
                         <h2>Aids, Supports</h2>
                         {positiveForces.map(force => (
-                            <div key={'force' + force.key}>
-                                <p>{force.description}</p>
-                            </div>
+                            <Force
+                                key={force.id}
+                                jobId={this.props.job.id}
+                                forceId={force.id}
+                                text={force.description}
+                                editing={this.state.editing}
+                                onForceUpdate={this.handleCardUpdate}
+                            />
                         ))}
                     </div>
                     <div className="negativeForces">
                         <h2>Obstacles, Fears, Anxieties</h2>
                         {negativeForces.map(force => (
-                            <div key={'force' + force.key}>
-                                <p>{force.description}</p>
-                            </div>
+                            <Force
+                                key={force.id}
+                                jobId={this.props.job.id}
+                                forceId={force.id}
+                                text={force.description}
+                                editing={this.state.editing}
+                                onForceUpdate={this.handleCardUpdate}
+                            />
                         ))}
                     </div>
                 </div>
