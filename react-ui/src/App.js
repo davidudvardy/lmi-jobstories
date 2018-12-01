@@ -163,7 +163,8 @@ class App extends Component {
           body: JSON.stringify({
             'context': jobs[updatedJobIndex].context,
             'motivation': jobs[updatedJobIndex].motivation,
-            'outcome': jobs[updatedJobIndex].outcome
+            'outcome': jobs[updatedJobIndex].outcome,
+            'forces': jobs[updatedJobIndex].forces
           }),
         })
           .then(r => r.json())
@@ -176,6 +177,7 @@ class App extends Component {
                   context: "",
                   motivation: "",
                   outcome: "",
+                  forces: [],
                 },
               });
             },
