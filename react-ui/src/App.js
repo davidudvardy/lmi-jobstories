@@ -91,7 +91,7 @@ class App extends Component {
   }
 
   handleJobUpdate(updatedJob) {
-    let jobs = this.state.jobs;
+    let jobs = JSON.parse(JSON.stringify(this.state.jobs));
     let updatedJobIndex = jobs.findIndex(job => { 
       return job.id === updatedJob.id;
     });
@@ -191,11 +191,20 @@ class App extends Component {
   }
 
   handleAddJob() {
-    let jobs = this.state.jobs;
-    let nextId = jobs.slice(-1)[0].id + 1;
+    // Get max job id used already to use in state data model
+    let jobs = JSON.parse(JSON.stringify(this.state.jobs));
+    let nextJobId = jobs.slice(-1)[0].id + 1;
+
+    // Get max force ids used already to use in state data model
+    let nextForceId = -1;
+    jobs.forEach(job => {
+      job.forces.forEach(force => {
+        if(force.id > nextForceId) nextForceId = force.id;
+      });
+    });
 
     jobs.push({
-      id: nextId,
+      id: nextJobId,
       context: "Context",
       motivation: "Motivation",
       outcome: "Outcome",
@@ -205,12 +214,12 @@ class App extends Component {
       ],
       forces: [
         {
-          key: 1,
+          id: ++nextForceId,
           description: "Positive force",
           direction: "positive"
         },
         {
-          key: 2,
+          id: ++nextForceId,
           description: "Negative force",
           direction: "negative"
         }
