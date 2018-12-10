@@ -4,7 +4,12 @@ import {Link} from 'react-router-dom';
 class Card extends Component {
     constructor(props) {
         super(props);
+        this.state = {
+            focused: false
+        }
         this.handleCardUpdate = this.handleCardUpdate.bind(this);
+        this.handleCardFocus = this.handleCardFocus.bind(this);
+        this.handleCardBlur = this.handleCardBlur.bind(this);
     }
 
     handleCardUpdate(event) {
@@ -15,7 +20,23 @@ class Card extends Component {
         });
     }
 
+    handleCardFocus(event) {
+        this.setState({
+            focused: true
+        });
+    }
+
+    handleCardBlur(event) {
+        this.setState({
+            focused: false
+        });
+    }
+
     render() {
+        let cardClassNames = 'card ';
+        cardClassNames += this.props.type.toLowerCase();
+        cardClassNames += this.state.focused ? ' focused' : '';
+
         let wrapText = (text, editing) => {
             if(!editing) {
                 return (
@@ -34,6 +55,8 @@ class Card extends Component {
                             type="text" 
                             value={text} 
                             onChange={this.handleCardUpdate}
+                            onFocus={this.handleCardFocus}
+                            onBlur={this.handleCardBlur}
                         />
                     </p>
                 )
@@ -41,7 +64,7 @@ class Card extends Component {
         }
 
         return (
-            <div className={"card " + this.props.type.toLowerCase()}>
+            <div className={cardClassNames}>
                 <h2>{this.props.type}</h2>
                 {wrapText(this.props.text, this.props.editing)}
             </div>

@@ -14,6 +14,13 @@ body {
   display: flex;
 }
 
+input:focus, 
+textarea:focus, 
+button:focus,
+a:focus {
+  outline: none;
+}
+
 /* Header */
 
 header {
@@ -118,6 +125,11 @@ section.selected {
 .card textarea {
   width: 100%;
   height: 200px;
+}
+
+.forces textarea {
+  width: 100%;
+  height: 120px;
 }
 
 .toolbar {
@@ -260,7 +272,14 @@ p, textarea {
   padding: 0;
   margin: 0;
   background-color: #004098;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 2px 12px rgba(0, 20, 50, 0.6);
+  box-shadow: 0 4px 8px rgba(0, 70, 180, 0.3);
+}
+
+#add:active {
+  background-color: #003580;
+  box-shadow: 0 1px 6px rgba(0, 20, 50, 0.8);
+  box-shadow: 0 2px 4px rgba(0, 70, 180, 0.4);
 }
 
 #add span {
@@ -293,7 +312,8 @@ p, textarea {
   display: inherit;
 }
 
-.card textarea {
+.card textarea,
+.forces textarea {
   padding: 0;
   border: 0 none transparent;
   background-color: transparent;
@@ -301,8 +321,13 @@ p, textarea {
   background-position-y: -6px;
 }
 
-.card textarea:focus {
+.card.focused textarea,
+.forces div.focused textarea {
   background-image: repeating-linear-gradient(transparent, transparent 28px, #7FB4FF 28px, #7FB4FF 29px);
+}
+
+.card.focused h2 {
+  color: #7FB4FF;
 }
 
 #close {
@@ -359,6 +384,14 @@ p, textarea {
 .button-secondary {
   background-color: #e6e6e6;
   color: #666;
+}
+
+.button-primary:active {
+  background-color: #003580;
+}
+
+.button-secondary:active {
+  background-color: #ddd;
 }
 
 /* Header */
@@ -494,7 +527,7 @@ header input[type=text]:focus {
   }
 
   .toolbar {
-    background-color: white;
+    background-color: rgba(255, 255, 255, 0.97);
     box-shadow: 0 -2px 16px rgba(0, 0, 0, 0.1);
   }
 
