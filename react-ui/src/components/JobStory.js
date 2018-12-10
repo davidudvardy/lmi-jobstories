@@ -15,6 +15,11 @@ class JobStory extends Component {
         this.handleCloseJobStory = this.handleCloseJobStory.bind(this);
     }
 
+    componentDidUpdate() {
+        // Hide scrollbars of BODY with CSS if modal is shown
+        document.querySelector("body").className = (new URL(document.URL).searchParams.get('job') !== null) ? "jobStorySelected" : "";
+    }
+
     handleStartEditing() {
         this.setState({
             editing: true
@@ -42,6 +47,8 @@ class JobStory extends Component {
         this.handleStopEditing(obj);
         // Go to URL with no searchParams to close selected job
         this.props.history.push(new URL(document.URL).pathname);
+        // Reveal scrollbars of BODY if modal is closed
+        document.querySelector("body").className = "";
     }
 
     render() {
@@ -49,7 +56,6 @@ class JobStory extends Component {
         sectionClassNames += this.state.editing ? ' editing' : '';
         sectionClassNames += this.props.selected ? ' selected' : '';
 
-        //console.log(this.props.job.forces);
         let positiveForces = [];
         let negativeForces = [];
         if(this.props.job.forces) {

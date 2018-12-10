@@ -100,6 +100,10 @@ section {
 
 /* Jobstory Modal */
 
+body.jobStorySelected {
+  overflow: hidden;
+}
+
 section.selected {
   position: fixed;
   top: 0;
@@ -111,6 +115,7 @@ section.selected {
   z-index: 1000;
   background-color: rgba(255, 255, 255, 0.97);
   padding: 60px;
+  overflow: auto;
 }
 
 .selected .cards {
@@ -144,6 +149,8 @@ section.selected {
   background-position-x: 30px;
   background-position-y: 30px;
   text-align: right;
+  background-color: transparent;
+  background-image: linear-gradient(transparent 0%, rgba(255, 255, 255, 0.97) 5%, rgba(255, 255, 255, 0.97) 100%);
 }
 
 #close {
