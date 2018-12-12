@@ -215,8 +215,12 @@ class App extends Component {
       motivation: "Motivation",
       outcome: "Outcome",
       product: "bold360",
+      producttitle: "Bold360",
       usertypes: [
-        "bold360-end-user"
+        {
+          id: "bold360-end-user",
+          title: "End User"
+        }
       ],
       forces: [
         {

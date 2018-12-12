@@ -139,7 +139,7 @@ section.selected {
 }
 
 .tags {
-  flex: 1;
+  flex: none;
   display: flex;
   min-height: 20px; /* TODO: Tags div collapses if no min-height is defined. Why? */
 }
@@ -148,6 +148,10 @@ section.selected {
   height: 20px;
   padding: 2px 6px 2px 6px;
   margin: 1px;
+}
+
+.tags>div>span {
+  color: #ccc;
 }
 
 .toolbar {
