@@ -26,7 +26,7 @@ A web app to store, edit and search job stories organized by products and user t
         - [x] Formatted textarea
         - [x] Save & Dismiss btns
         - [x] Editable forces
-        - [ ] Add new force
+        - [x] Add new force
         - [ ] Define/Edit product
         - [ ] Add new usertype
         - [ ] Remove usertype

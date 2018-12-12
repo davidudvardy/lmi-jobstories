@@ -13,6 +13,7 @@ class JobStory extends Component {
         this.handleStartEditing = this.handleStartEditing.bind(this);
         this.handleStopEditing = this.handleStopEditing.bind(this);
         this.handleCloseJobStory = this.handleCloseJobStory.bind(this);
+        this.handleForceAdd = this.handleForceAdd.bind(this);
     }
 
     componentDidUpdate() {
@@ -49,6 +50,10 @@ class JobStory extends Component {
         this.props.history.push(new URL(document.URL).pathname);
         // Reveal scrollbars of BODY if modal is closed
         document.querySelector("body").className = "";
+    }
+
+    handleForceAdd(event) {
+        this.props.onForceAdd(event.target.id);
     }
 
     render() {
@@ -96,6 +101,13 @@ class JobStory extends Component {
                 <div className="forces">
                     <div className="positiveForces">
                         <h2>Aids, Supports</h2>
+                        {this.state.editing && 
+                            <button 
+                                id="positive"
+                                onClick={this.handleForceAdd}
+                                className="button button-secondary"
+                            >Add</button>
+                        }
                         {positiveForces.map(force => (
                             <Force
                                 key={force.id}
@@ -109,6 +121,13 @@ class JobStory extends Component {
                     </div>
                     <div className="negativeForces">
                         <h2>Obstacles, Fears, Anxieties</h2>
+                        {this.state.editing && 
+                            <button 
+                                id="negative"
+                                onClick={this.handleForceAdd}
+                                className="button button-secondary"
+                            >Add</button>
+                        }
                         {negativeForces.map(force => (
                             <Force
                                 key={force.id}

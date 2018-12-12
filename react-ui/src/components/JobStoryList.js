@@ -6,6 +6,7 @@ class JobStoryList extends Component {
         super(props);
         this.handleJobUpdate = this.handleJobUpdate.bind(this);
         this.handleStopEditing = this.handleStopEditing.bind(this);
+        this.handleForceAdd = this.handleForceAdd.bind(this);
     }
 
     handleJobUpdate(obj) {
@@ -14,6 +15,10 @@ class JobStoryList extends Component {
 
     handleStopEditing(action) {
         this.props.onStopEditing(action);
+    }
+
+    handleForceAdd(action) {
+        this.props.onForceAdd(action);
     }
 
     render() {
@@ -42,7 +47,7 @@ class JobStoryList extends Component {
             let searchFilter = this.props.searchFilter.toLowerCase();
             jobs = jobs.filter(function (job) {
                 let forces_str = '';
-                job.forces.map(function(force) {
+                job.forces.forEach(force => {
                     forces_str += force.description.toLowerCase() + ' ';
                 });
                 return job.context.toLowerCase().search(searchFilter) !== -1 || job.motivation.toLowerCase().search(searchFilter) !== -1 || job.outcome.toLowerCase().search(searchFilter) !== -1 || forces_str.search(searchFilter) !== -1;
@@ -56,7 +61,8 @@ class JobStoryList extends Component {
                     key={job.id} 
                     onJobUpdate={this.handleJobUpdate}
                     onStopEditing={this.handleStopEditing}
-                    selected={job.id == new URL(document.URL).searchParams.get('job')}
+                    onForceAdd={this.handleForceAdd}
+                    selected={job.id === parseInt(new URL(document.URL).searchParams.get('job'), 10)}
                 />
             ))
         );

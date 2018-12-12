@@ -31,6 +31,7 @@ class App extends Component {
     this.handleJobUpdate = this.handleJobUpdate.bind(this);
     this.handleStopEditing = this.handleStopEditing.bind(this);
     this.handleAddJob = this.handleAddJob.bind(this);
+    this.handleForceAdd = this.handleForceAdd.bind(this);
   }
 
   componentDidMount() {
@@ -193,7 +194,11 @@ class App extends Component {
   handleAddJob() {
     // Get max job id used already to use in state data model
     let jobs = JSON.parse(JSON.stringify(this.state.jobs));
-    let nextJobId = jobs.slice(-1)[0].id + 1;
+    let nextJobId = -1;
+    jobs.forEach(job => {
+      if(job.id > nextJobId) nextJobId = job.id;
+    });
+    nextJobId++;
 
     // Get max force ids used already to use in state data model
     let nextForceId = -1;
@@ -202,6 +207,7 @@ class App extends Component {
         if(force.id > nextForceId) nextForceId = force.id;
       });
     });
+    nextForceId++;
 
     jobs.push({
       id: nextJobId,
@@ -214,17 +220,60 @@ class App extends Component {
       ],
       forces: [
         {
-          id: ++nextForceId,
+          id: nextForceId,
           description: "Positive force",
           direction: "positive"
         },
         {
-          id: ++nextForceId,
+          id: nextForceId + 1,
           description: "Negative force",
           direction: "negative"
         }
       ]
     });
+    this.setState({
+      jobs: jobs,
+    });
+  }
+
+  handleForceAdd(action) {
+    // Get array index of currently edited job story in state data model
+    let jobs = JSON.parse(JSON.stringify(this.state.jobs));
+    let updatedJobId = parseInt(new URL(document.URL).searchParams.get('job'), 10);
+    let updatedJobIndex = jobs.findIndex(job => { 
+      return job.id === updatedJobId;
+    });
+
+    // Store original text in state if we just started editing
+    if(this.state.unsavedJob.id == null) {
+      this.setState({
+        unsavedJob: {
+          id: updatedJobId,
+          context: jobs[updatedJobIndex].context,
+          motivation: jobs[updatedJobIndex].motivation,
+          outcome: jobs[updatedJobIndex].outcome,
+          forces: JSON.parse(JSON.stringify(jobs[updatedJobIndex].forces)),
+        },
+      });
+    }
+
+    // Get max force ids used already
+    let nextForceId = -1;
+    jobs.forEach(job => {
+      job.forces.forEach(force => {
+        if(force.id > nextForceId) nextForceId = force.id;
+      });
+    });
+    nextForceId++;
+
+    // Add new force with sample content
+    jobs[updatedJobIndex].forces.push({
+      id: nextForceId,
+      description: 'New force',
+      direction: action,
+    });
+
+    // Update state with new data
     this.setState({
       jobs: jobs,
     });
@@ -260,6 +309,7 @@ class App extends Component {
               searchFilter={searchFilter}
               onJobUpdate={this.handleJobUpdate} 
               onStopEditing={this.handleStopEditing}
+              onForceAdd={this.handleForceAdd}
             />
           </main>
         </div>
