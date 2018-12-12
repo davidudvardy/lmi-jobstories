@@ -26,6 +26,7 @@ class JobStoryList extends Component {
         let type = this.props.categoryFilter.type;
         let category = this.props.categoryFilter.category;
         let jobs = this.props.jobs;
+        let usertypes = [];
 
         switch (type) {
             case 'product':
@@ -35,7 +36,11 @@ class JobStoryList extends Component {
                 break;
             case 'usertype':
                 jobs = jobs.filter(function (job) {
-                    return job.usertypes.includes(category);
+                    usertypes = [];
+                    job.usertypes.forEach(usertype => {
+                        usertypes.push(usertype.id);
+                    });
+                    return usertypes.includes(category);
                 });
                 break;
             default:

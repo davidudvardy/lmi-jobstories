@@ -20,7 +20,7 @@ A web app to store, edit and search job stories organized by products and user t
         - [x] Close btn
         - [x] Forces displayed below (first with mock data)
         - [x] Forces stored and served from DB
-        - [ ] Product and usertypes shown as tags
+        - [x] Product and usertypes shown as tags
     - [ ] **Special layout for editing view:**
         - [x] New job story floating btn
         - [x] Formatted textarea
