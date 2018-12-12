@@ -74,6 +74,15 @@ class JobStory extends Component {
 
         return (
             <section className={sectionClassNames}>
+            {this.props.selected && 
+                <div className="tags">
+                    <div>{this.props.job.producttitle} {this.state.editing && <span>Edit</span>}</div>
+                    {this.props.job.usertypes.map(usertype => (
+                        <div>{usertype.title} {this.state.editing && <span>Remove</span>}</div>
+                    ))}
+                    {this.state.editing && <div>+</div>}
+                </div>
+            }
                 <div className="cards">
                     <Card 
                         jobId={this.props.job.id}
