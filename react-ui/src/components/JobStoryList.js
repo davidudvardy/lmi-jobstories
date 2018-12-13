@@ -68,6 +68,7 @@ class JobStoryList extends Component {
                     onStopEditing={this.handleStopEditing}
                     onForceAdd={this.handleForceAdd}
                     selected={job.id === parseInt(new URL(document.URL).searchParams.get('job'), 10)}
+                    productData={this.props.productData}
                 />
             ))
         );

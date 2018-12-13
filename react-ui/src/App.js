@@ -314,6 +314,7 @@ class App extends Component {
               onJobUpdate={this.handleJobUpdate} 
               onStopEditing={this.handleStopEditing}
               onForceAdd={this.handleForceAdd}
+              productData={this.state.productData}
             />
           </main>
         </div>

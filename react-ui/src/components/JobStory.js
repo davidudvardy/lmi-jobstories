@@ -56,6 +56,39 @@ class JobStory extends Component {
         this.props.onForceAdd(event.target.id);
     }
 
+    handleProductEdit() {
+        // event: editing product name was started
+        // show selectable list of products (needs data from App.js level)
+        this.props.productData.forEach(product => {
+            console.log(product.key, product.title);
+        });
+    }
+
+    handleProductChanged(event) {
+        // event: different product was selected from list
+        // close list
+        // change product id and name in state data model (App.js level?)
+        // remove existing usertypes from state data model (App.js level?)
+        console.log(event.target.id, event.target.text, this.props.job.id, this.props.job.product);
+    }
+
+    handleUserTypeAdd() {
+        // event: add usertype btn clicked
+        // show selectable list of usertypes with matching ids to the current product id (needs data from App.js level)
+        // this.props.productData.find(this.props.job.product)
+    }
+
+    handleUserTypeAdded() {
+        // event: usertype was selected from the list of usertypes
+        // close list
+        // add new usertype to the state data model (App.js level?)
+    }
+
+    handleUserTypeRemove(event) {
+        // event: usertype remove button clicked
+        // remove usertype from state data model (App.js level?)
+    }
+
     render() {
         let sectionClassNames = '';
         sectionClassNames += this.state.editing ? ' editing' : '';
