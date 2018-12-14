@@ -106,24 +106,23 @@ class JobStory extends Component {
             // Product and usertype tags -- Editing
                 <div className="tags">
                     <div><select defaultValue={this.props.job.product}>
-                        {this.state.products.map(function(product) {
-                            return(<option key={product.id} value={product.id}>{product.title}</option>);
-                        }, this)}
+                        {this.state.products.map(product => 
+                            <option key={product.id} value={product.id}>{product.title}</option>
+                        )}
                     </select></div>
-                    {this.state.usertypes.map(function(usertype) { 
-                        return (
-                            <div key={usertype.id}>
-                                <label>
-                                    <input 
-                                        type="checkbox" 
-                                        id={usertype.id} 
-                                        defaultChecked={this.props.job.usertypes.findIndex(currentUsertype => currentUsertype.id === usertype.id) !== -1}
-                                    />
-                                    {usertype.title}
-                                </label>
-                            </div>
-                        );
-                    }, this)}
+                    {this.state.usertypes.map(usertype => 
+                        <div key={usertype.id}>
+                            <label>
+                                <input 
+                                    type="checkbox" 
+                                    id={usertype.id} 
+                                    defaultChecked={this.props.job.usertypes.findIndex(currentUsertype => currentUsertype.id === usertype.id) !== -1}
+                                />
+                                {usertype.title}
+                            </label>
+                        </div>,
+                        this
+                    )}
                 </div>
             }
                 <div className="cards">
