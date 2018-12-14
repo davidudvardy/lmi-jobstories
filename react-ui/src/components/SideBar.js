@@ -9,12 +9,12 @@ class SideBar extends Component {
                     <h2>Filters</h2>
                     <ul>
                         {this.props.data.map(product => (
-                            <li className="products" key={product.key}>
-                                <NavLink to={'/product/' + product.key} activeClassName="selected">{product.title}</NavLink>
+                            <li className="products" key={product.id}>
+                                <NavLink to={'/product/' + product.id} activeClassName="selected">{product.title}</NavLink>
                                 <ul>
                                     {Array.isArray(product.usertypes) && product.usertypes.map(userType => (
-                                        <li className="usertypes" key={userType.key}>
-                                            <NavLink to={'/usertype/' + userType.key} activeClassName="selected">{userType.title}</NavLink>
+                                        <li className="usertypes" key={userType.id}>
+                                            <NavLink to={'/usertype/' + userType.id} activeClassName="selected">{userType.title}</NavLink>
                                         </li>
                                     ))}
                                 </ul>

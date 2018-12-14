@@ -7,7 +7,9 @@ class JobStory extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            editing: false
+            editing: false,
+            products: [],
+            usertypes: [],
         }
         this.handleCardUpdate = this.handleCardUpdate.bind(this);
         this.handleStartEditing = this.handleStartEditing.bind(this);
@@ -22,9 +24,30 @@ class JobStory extends Component {
     }
 
     handleStartEditing() {
-        this.setState({
-            editing: true
-        });
+        // Wait till productData arrives, it is needed for editing the tags
+        // TODO: At least a loading state should be created to make this nicer !!!
+        if(this.props.productData !== undefined) {
+            // Collect all productnames and ids in state
+            let products = [];
+            this.props.productData.forEach(product => {
+                products.push({
+                    id: product.id,
+                    title: product.title,
+                });
+            });
+
+            // Find current product in productData array
+            let productIndex = this.props.productData.findIndex(product => { 
+                return product.id === this.props.job.product;
+            });
+
+            // Save products and all usertypes of the current product 
+            this.setState({
+                editing: true,
+                products: products,
+                usertypes: this.props.productData[productIndex].usertypes,
+            });
+        }
     }
 
     handleStopEditing(event) {
@@ -56,39 +79,6 @@ class JobStory extends Component {
         this.props.onForceAdd(event.target.id);
     }
 
-    handleProductEdit() {
-        // event: editing product name was started
-        // show selectable list of products (needs data from App.js level)
-        this.props.productData.forEach(product => {
-            console.log(product.key, product.title);
-        });
-    }
-
-    handleProductChanged(event) {
-        // event: different product was selected from list
-        // close list
-        // change product id and name in state data model (App.js level?)
-        // remove existing usertypes from state data model (App.js level?)
-        console.log(event.target.id, event.target.text, this.props.job.id, this.props.job.product);
-    }
-
-    handleUserTypeAdd() {
-        // event: add usertype btn clicked
-        // show selectable list of usertypes with matching ids to the current product id (needs data from App.js level)
-        // this.props.productData.find(this.props.job.product)
-    }
-
-    handleUserTypeAdded() {
-        // event: usertype was selected from the list of usertypes
-        // close list
-        // add new usertype to the state data model (App.js level?)
-    }
-
-    handleUserTypeRemove(event) {
-        // event: usertype remove button clicked
-        // remove usertype from state data model (App.js level?)
-    }
-
     render() {
         let sectionClassNames = '';
         sectionClassNames += this.state.editing ? ' editing' : '';
@@ -97,23 +87,43 @@ class JobStory extends Component {
         let positiveForces = [];
         let negativeForces = [];
         if(this.props.job.forces) {
-            positiveForces = this.props.job.forces.filter(function (force) {
-                return force.direction === 'positive';
-            });
-            negativeForces = this.props.job.forces.filter(function(force) {
-                return force.direction === 'negative';
-            });
+            positiveForces = this.props.job.forces.filter(force => force.direction === 'positive');
+            negativeForces = this.props.job.forces.filter(force => force.direction === 'negative');
         }
 
         return (
             <section className={sectionClassNames}>
-            {this.props.selected && 
+            {this.props.selected && !this.state.editing && 
+            // Product and usertype tags -- Read-only
                 <div className="tags">
-                    <div>{this.props.job.producttitle} {this.state.editing && <span>Edit</span>}</div>
-                    {this.props.job.usertypes.map(usertype => (
-                        <div key={usertype.id}>{usertype.title} {this.state.editing && <span>Remove</span>}</div>
-                    ))}
-                    {this.state.editing && <div>+</div>}
+                    <div>{this.props.job.producttitle}</div>
+                    {this.props.job.usertypes.map(usertype => 
+                        <div key={usertype.id}>{usertype.title}</div>
+                    )}
+                </div>
+            }
+            {this.props.selected && this.state.editing && 
+            // Product and usertype tags -- Editing
+                <div className="tags">
+                    <div><select defaultValue={this.props.job.product}>
+                        {this.state.products.map(function(product) {
+                            return(<option key={product.id} value={product.id}>{product.title}</option>);
+                        }, this)}
+                    </select></div>
+                    {this.state.usertypes.map(function(usertype) { 
+                        return (
+                            <div key={usertype.id}>
+                                <label>
+                                    <input 
+                                        type="checkbox" 
+                                        id={usertype.id} 
+                                        defaultChecked={this.props.job.usertypes.findIndex(currentUsertype => currentUsertype.id === usertype.id) !== -1}
+                                    />
+                                    {usertype.title}
+                                </label>
+                            </div>
+                        );
+                    }, this)}
                 </div>
             }
                 <div className="cards">

@@ -27,9 +27,8 @@ A web app to store, edit and search job stories organized by products and user t
         - [x] Save & Dismiss btns
         - [x] Editable forces
         - [x] Add new force
-        - [ ] Define/Edit product
-        - [ ] Add new usertype
-        - [ ] Remove usertype
+        - [ ] Change product
+        - [ ] Add/remove usertype
 
 **Future feature ideas:**
 - Instant search in existing context/motivation/outcome cards while creating new (card spinner selector)
