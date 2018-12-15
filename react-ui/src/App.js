@@ -285,9 +285,11 @@ class App extends Component {
     // Get max force ids used already
     let nextForceId = -1;
     jobs.forEach(job => {
-      job.forces.forEach(force => {
-        if(force.id > nextForceId) nextForceId = force.id;
-      });
+      if(Array.isArray(job.forces)) {
+        job.forces.forEach(force => {
+          if(force.id > nextForceId) nextForceId = force.id;
+        });
+      }
     });
     nextForceId++;
 
