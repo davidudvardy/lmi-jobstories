@@ -28,6 +28,7 @@ router.put('/api/jobstory-update/:jobId', (req, res) => {
                             req.body.outcome
                         ]
                         // Forces are either updated or inserted depending on if they already exist
+                        if(!Array.isArray(data.forces_ids)) data.forces_ids = []
                         req.body.forces.forEach(force => {
                             if(data.forces_ids.indexOf(force.id) !== -1) {
                                 // Force exists, so we just UPDATE it

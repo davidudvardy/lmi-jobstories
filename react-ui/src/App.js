@@ -45,7 +45,11 @@ class App extends Component {
       .then(
         (jobStoriesData) => {
           this.setState({
-            jobs: jobStoriesData,
+            // Forces can be null, so convert it to empty array
+            jobs: jobStoriesData.map(j => {
+                    if(!Array.isArray(j.forces)) j.forces = [];
+                    return j;
+                  }),
             isLoaded: true,
           });
           this.props.history.listen(() => {
@@ -294,6 +298,7 @@ class App extends Component {
     nextForceId++;
 
     // Add new force with sample content
+    if(!Array.isArray(jobs[updatedJobIndex].forces)) jobs[updatedJobIndex].forces = [];
     jobs[updatedJobIndex].forces.push({
       id: nextForceId,
       description: 'New force',
