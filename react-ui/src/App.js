@@ -248,9 +248,14 @@ class App extends Component {
         }
       ]
     });
+
     this.setState({
       jobs: jobs,
     });
+
+    // Open newly added job in modal to edit
+    // TODO: Could we initiate editing mode to make it even more convenient?
+    this.props.history.push("/?job=" + nextJobId);
   }
 
   handleForceAdd(action) {
@@ -301,9 +306,7 @@ class App extends Component {
 
   handleProductDataChange(updatedJob) {
     let jobs = JSON.parse(JSON.stringify(this.state.jobs));
-    let updatedJobIndex = jobs.findIndex(job => { 
-      return job.id === updatedJob.id;
-    });
+    const updatedJobIndex = jobs.findIndex(job => job.id === updatedJob.id);
 
     // Store original text in state if we just started editing
     if(this.state.unsavedJob.id == null) {
@@ -346,7 +349,7 @@ class App extends Component {
   }
 
   render() {
-    const {jobs, categoryFilter, searchFilter, productData, isLoaded, error} = this.state;
+    const {jobs, categoryFilter, searchFilter, productData, isLoaded, error} = JSON.parse(JSON.stringify(this.state));
     if(error) {
       return (<h1>Error loading JSON data: {error.message}</h1>);
     } else if (!isLoaded) {
@@ -362,7 +365,7 @@ class App extends Component {
               type="text" 
               placeholder="Search job stories..." 
               onInput={this.handleFilterChange} 
-              value={this.state.searchFilter}
+              value={searchFilter}
             />
           </header>
           <SideBar data={productData} />
@@ -376,7 +379,7 @@ class App extends Component {
               onJobUpdate={this.handleJobUpdate} 
               onStopEditing={this.handleStopEditing}
               onForceAdd={this.handleForceAdd}
-              productData={this.state.productData}
+              productData={productData}
               onProductDataChange={this.handleProductDataChange}
             />
           </main>
