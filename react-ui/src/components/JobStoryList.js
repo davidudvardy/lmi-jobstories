@@ -7,6 +7,7 @@ class JobStoryList extends Component {
         this.handleJobUpdate = this.handleJobUpdate.bind(this);
         this.handleStopEditing = this.handleStopEditing.bind(this);
         this.handleForceAdd = this.handleForceAdd.bind(this);
+        this.handleProductDataChange = this.handleProductDataChange.bind(this);
     }
 
     handleJobUpdate(obj) {
@@ -21,18 +22,20 @@ class JobStoryList extends Component {
         this.props.onForceAdd(action);
     }
 
+    handleProductDataChange(obj) {
+        this.props.onProductDataChange(obj);
+    }
+
     render() {
         // Filter for categories first
         let type = this.props.categoryFilter.type;
         let category = this.props.categoryFilter.category;
-        let jobs = this.props.jobs;
+        let jobs = this.props.jobs; // TODO: Shouldn't we copy here properly? We are changing the props.jobs via this link later when filtering...
         let usertypes = [];
 
         switch (type) {
             case 'product':
-                jobs = jobs.filter(function (job) {
-                    return job.product === category;
-                });
+                jobs = jobs.filter(job => job.productid === category);
                 break;
             case 'usertype':
                 jobs = jobs.filter(function (job) {
@@ -69,6 +72,7 @@ class JobStoryList extends Component {
                     onForceAdd={this.handleForceAdd}
                     selected={job.id === parseInt(new URL(document.URL).searchParams.get('job'), 10)}
                     productData={this.props.productData}
+                    onProductDataChange={this.handleProductDataChange}
                 />
             ))
         );

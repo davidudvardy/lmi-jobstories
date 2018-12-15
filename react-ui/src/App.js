@@ -16,6 +16,9 @@ class App extends Component {
         motivation: "",
         outcome: "",
         forces: [],
+        productid: "",
+        producttitle: "",
+        usertypes: [],
       },
       categoryFilter: {
         type: "",
@@ -32,6 +35,7 @@ class App extends Component {
     this.handleStopEditing = this.handleStopEditing.bind(this);
     this.handleAddJob = this.handleAddJob.bind(this);
     this.handleForceAdd = this.handleForceAdd.bind(this);
+    this.handleProductDataChange = this.handleProductDataChange.bind(this);
   }
 
   componentDidMount() {
@@ -106,6 +110,9 @@ class App extends Component {
           motivation: jobs[updatedJobIndex].motivation,
           outcome: jobs[updatedJobIndex].outcome,
           forces: JSON.parse(JSON.stringify(jobs[updatedJobIndex].forces)),
+          productid: jobs[updatedJobIndex].productid,
+          producttitle: jobs[updatedJobIndex].producttitle,
+          usertypes: jobs[updatedJobIndex].usertypes,
         },
       });
     }
@@ -129,8 +136,8 @@ class App extends Component {
     // Check if there were any edits at all
     if(this.state.unsavedJob.id != null) {
       
-      let {id, context, motivation, outcome, forces} = this.state.unsavedJob;
-      let jobs = this.state.jobs;
+      let {id, context, motivation, outcome, forces, productid, producttitle, usertypes} = this.state.unsavedJob;
+      let jobs = JSON.parse(JSON.stringify(this.state.jobs));
       let updatedJobIndex = jobs.findIndex(job => { 
         return job.id === id; 
       });
@@ -141,6 +148,9 @@ class App extends Component {
         jobs[updatedJobIndex].motivation = motivation;
         jobs[updatedJobIndex].outcome = outcome;
         jobs[updatedJobIndex].forces = forces;
+        jobs[updatedJobIndex].productid = productid;
+        jobs[updatedJobIndex].producttitle = producttitle;
+        jobs[updatedJobIndex].usertypes = usertypes;
         // Store in state and reset unsavedJob
         this.setState({
           jobs: jobs,
@@ -150,6 +160,9 @@ class App extends Component {
             motivation: "",
             outcome: "",
             forces: [],
+            productid: "",
+            producttitle: "",
+            usertypes: [],
           },
         });
 
@@ -165,7 +178,9 @@ class App extends Component {
             'context': jobs[updatedJobIndex].context,
             'motivation': jobs[updatedJobIndex].motivation,
             'outcome': jobs[updatedJobIndex].outcome,
-            'forces': jobs[updatedJobIndex].forces
+            'forces': jobs[updatedJobIndex].forces,
+            'usertypes': jobs[updatedJobIndex].usertypes.map(u => u.id)
+            // productid and producttitle are derived from usertypes, not stored in jobstories table, so no need to send
           }),
         })
           .then(r => r.json())
@@ -179,6 +194,9 @@ class App extends Component {
                   motivation: "",
                   outcome: "",
                   forces: [],
+                  productid: "",
+                  producttitle: "",
+                  usertypes: [],
                 },
               });
             },
@@ -214,14 +232,9 @@ class App extends Component {
       context: "Context",
       motivation: "Motivation",
       outcome: "Outcome",
-      product: "bold360",
-      producttitle: "Bold360",
-      usertypes: [
-        {
-          id: "bold360-end-user",
-          title: "End User"
-        }
-      ],
+      productid: this.state.productData[0].id,
+      producttitle: this.state.productData[0].title,
+      usertypes: [this.state.productData[0].usertypes[0]],
       forces: [
         {
           id: nextForceId,
@@ -257,6 +270,9 @@ class App extends Component {
           motivation: jobs[updatedJobIndex].motivation,
           outcome: jobs[updatedJobIndex].outcome,
           forces: JSON.parse(JSON.stringify(jobs[updatedJobIndex].forces)),
+          productid: jobs[updatedJobIndex].productid,
+          producttitle: jobs[updatedJobIndex].producttitle,
+          usertypes: jobs[updatedJobIndex].usertypes,
         },
       });
     }
@@ -278,6 +294,52 @@ class App extends Component {
     });
 
     // Update state with new data
+    this.setState({
+      jobs: jobs,
+    });
+  }
+
+  handleProductDataChange(updatedJob) {
+    let jobs = JSON.parse(JSON.stringify(this.state.jobs));
+    let updatedJobIndex = jobs.findIndex(job => { 
+      return job.id === updatedJob.id;
+    });
+
+    // Store original text in state if we just started editing
+    if(this.state.unsavedJob.id == null) {
+      this.setState({
+        unsavedJob: {
+          id: updatedJob.id,
+          context: jobs[updatedJobIndex].context,
+          motivation: jobs[updatedJobIndex].motivation,
+          outcome: jobs[updatedJobIndex].outcome,
+          forces: JSON.parse(JSON.stringify(jobs[updatedJobIndex].forces)),
+          productid: jobs[updatedJobIndex].productid,
+          producttitle: jobs[updatedJobIndex].producttitle,
+          usertypes: JSON.parse(JSON.stringify(jobs[updatedJobIndex].usertypes)),
+        },
+      });
+    }
+
+    jobs[updatedJobIndex].productid = updatedJob.productid;
+    jobs[updatedJobIndex].producttitle = updatedJob.producttitle;
+
+    const productIndex = this.state.productData.findIndex(p => p.id === updatedJob.productid);
+    if(this.state.productData[productIndex].usertypes.length === 1) {
+      // If we just assigned a product which has only a single usertype, 
+      // we must assign that usertype too, and disable deselecting it from frontend 
+      // in JobStory.js as every job story must have at least one usertype assigned.
+      jobs[updatedJobIndex].usertypes = [{
+        id: this.state.productData[productIndex].usertypes[0].id,
+        title: this.state.productData[productIndex].usertypes[0].title,
+      }];
+    } else {
+      jobs[updatedJobIndex].usertypes = updatedJob.usertypes;
+    }
+
+    // Clear filters so to make sure current job is not filtered out by the change
+    this.props.history.push("/" + new URL(document.URL).search);
+
     this.setState({
       jobs: jobs,
     });
@@ -315,6 +377,7 @@ class App extends Component {
               onStopEditing={this.handleStopEditing}
               onForceAdd={this.handleForceAdd}
               productData={this.state.productData}
+              onProductDataChange={this.handleProductDataChange}
             />
           </main>
         </div>

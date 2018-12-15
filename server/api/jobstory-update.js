@@ -43,6 +43,8 @@ router.put('/api/jobstory-update/:jobId', (req, res) => {
                         })
                         // Update force id references in job story if any new forces were added
                         query += "UPDATE jobstories SET forces_ids='{" + data.forces_ids + "}' WHERE id=" + parseInt(req.params.jobId, 10) + " RETURNING id;"
+                        // Update usertype id references in job story
+                        query += "UPDATE jobstories SET usertype_ids='{" + req.body.usertypes.join() + "}' WHERE id=" + parseInt(req.params.jobId, 10) + ";"
                         return t.multi(query, values)
                     } else {
                         // Job story not found, so we are adding it
@@ -75,13 +77,14 @@ router.put('/api/jobstory-update/:jobId', (req, res) => {
                                     //       Dynamic id should then be passed back, so we can silently redirect to the correct URL, otherwise frontend 
                                     //       couldn't display job story. Need to figure out how this can be done.
                                     query = `INSERT INTO jobstories(id, context_id, motivation_id, outcome_id, usertype_ids, forces_ids) ` + 
-                                            `VALUES($1, $2, $3, $4, '{bold360-end-user}', $5) ` + 
+                                            `VALUES($1, $2, $3, $4, $5, $6) ` + 
                                             `RETURNING id;`
                                     values = [
                                         req.params.jobId,
                                         cards[0][0].id,
                                         cards[1][0].id,
                                         cards[2][0].id,
+                                        "{" + req.body.usertypes.join() + "}",
                                         "{" + forces.join() + "}"
                                     ]
                                     return t.one(query, values)
