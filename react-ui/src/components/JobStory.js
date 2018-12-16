@@ -18,6 +18,7 @@ class JobStory extends Component {
         this.handleForceAdd = this.handleForceAdd.bind(this);
         this.handleProductChange = this.handleProductChange.bind(this);
         this.handleUsertypeChange = this.handleUsertypeChange.bind(this);
+        this.highlightSearch = this.highlightSearch.bind(this);
     }
 
     componentDidUpdate() {
@@ -117,6 +118,12 @@ class JobStory extends Component {
         });
     }
 
+    highlightSearch(text) {
+        const search = document.getElementById('filter').value;
+        // TODO: How could we insert HTML tags, like a <span> in replaced text? HTML gets rendered as string now :(
+        return (search.length > 2) ? text.replace(new RegExp(search, 'gi'), '_' + search + '_') : text;
+    }
+
     render() {
         let sectionClassNames = '';
         sectionClassNames += this.state.editing ? ' editing' : '';
@@ -168,21 +175,21 @@ class JobStory extends Component {
                 <div className="cards">
                     <Card 
                         jobId={this.props.job.id}
-                        text={this.props.job.context}
+                        text={this.highlightSearch(this.props.job.context)}
                         type="context"
                         editing={this.state.editing}
                         onCardUpdate={this.handleCardUpdate}
                     />
                     <Card 
                         jobId={this.props.job.id}
-                        text={this.props.job.motivation}
+                        text={this.highlightSearch(this.props.job.motivation)}
                         type="motivation"
                         editing={this.state.editing}
                         onCardUpdate={this.handleCardUpdate}
                     />
                     <Card 
                         jobId={this.props.job.id}
-                        text={this.props.job.outcome}
+                        text={this.highlightSearch(this.props.job.outcome)}
                         type="outcome"
                         editing={this.state.editing}
                         onCardUpdate={this.handleCardUpdate}

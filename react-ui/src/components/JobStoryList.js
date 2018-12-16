@@ -52,7 +52,7 @@ class JobStoryList extends Component {
 
         // Then filter for search term if present
         if(this.props.searchFilter) {
-            let searchFilter = this.props.searchFilter.toLowerCase();
+            const searchFilter = this.props.searchFilter.toLowerCase();
             jobs = jobs.filter(function (job) {
                 let forces_str = '';
                 job.forces.forEach(force => {
@@ -63,7 +63,7 @@ class JobStoryList extends Component {
         }
 
         return (
-            jobs.map(job => (
+            jobs.map(job => 
                 <JobStory 
                     job={job} 
                     key={job.id} 
@@ -74,7 +74,7 @@ class JobStoryList extends Component {
                     productData={this.props.productData}
                     onProductDataChange={this.handleProductDataChange}
                 />
-            ))
+            )
         );
     }
 }

@@ -290,6 +290,10 @@ p, textarea {
   color: #333;
 }
 
+.searchHighlight {
+  font-weight: 600;
+}
+
 #add {
   border-radius: 50%;
   border: 0 none transparent;
