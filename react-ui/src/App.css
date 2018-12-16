@@ -1,6 +1,8 @@
 /** LAYOUT **/
 
 * {
+  margin: 0;
+  padding: 0;
   box-sizing: border-box;
 }
 
@@ -88,7 +90,7 @@ section {
   flex: none;
   display: flex;
   justify-content: flex-start;
-  margin-bottom: 60px;
+  margin-bottom: 24px;
 }
 
 .card {
@@ -96,6 +98,48 @@ section {
   padding: 0 20px 0 0;
   min-width: 240px;
   max-width: 400px;
+}
+
+.separator {
+  list-style: none;
+  display: flex;
+  margin-bottom: 64px;
+}
+.separator li {
+  flex: 1;
+}
+.separator li span {
+  display: block;
+  background: #DBDBDB80;
+  position: relative;
+  height: 6px;
+  line-height: 6px;
+  margin-right: 7px;
+}
+.separator li:first-child span:before {
+  border: none;
+}
+.separator li:last-child span:after {
+  border: none;
+}
+.separator li span:before, 
+.separator li span:after {
+  content: "";
+  position: absolute;
+  top: 0;
+  border: 0 solid #DBDBDB80;
+  border-width: 3px 2px;
+  width: 0;
+  height: 0;
+}
+.separator li span:before {
+  left: -4px;
+  border-left-color: transparent;
+}
+.separator li span:after {
+  left: 100%;
+  border-color: transparent;
+  border-left-color: #DBDBDB80;
 }
 
 
@@ -114,7 +158,8 @@ section.selected {
   max-width: 100%;
   margin: 0;
   z-index: 1000;
-  background-color: rgba(255, 255, 255, 0.97);
+  background-color: transparent;
+  background-image: linear-gradient(rgb(240, 243, 248) 0, rgb(243, 246, 250) 100px, rgba(249, 250, 252, 0.99) 124px, rgba(253, 253, 253, 0.98) 160px, rgba(253, 253, 253, 0.98) 100%);
   padding: 60px;
   overflow: auto;
 }
@@ -142,6 +187,7 @@ section.selected {
   flex: none;
   display: flex;
   min-height: 20px; /* TODO: Tags div collapses if no min-height is defined. Why? */
+  margin-bottom: 10px;
 }
 
 .tags>div {
@@ -154,6 +200,25 @@ section.selected {
   color: #ccc;
 }
 
+.tags input {
+  margin-right: 4px;
+}
+
+.selected .separator li span {
+  background-color: #33333380;
+}
+.selected .separator li span:before {
+  border-color: #33333380;
+  border-left-color: transparent;
+}
+.selected .separator li span:after {
+  border-left-color: #33333380;
+}
+
+.editing .separator {
+  opacity: 0.1;
+}
+
 .toolbar {
   position: fixed;
   height: calc(30px + 48px + 30px);
@@ -161,13 +226,13 @@ section.selected {
   left: 0;
   right: 0;
   padding: 30px 20px 30px 30px;
-  background-image: url('/logo-gray.svg');
   background-repeat: no-repeat;
   background-position-x: 30px;
   background-position-y: 30px;
   text-align: right;
   background-color: transparent;
   background-image: linear-gradient(transparent 0%, rgba(255, 255, 255, 0.97) 5%, rgba(255, 255, 255, 0.97) 100%);
+  background-image: url('/logo-gray.svg');
 }
 
 #close {
@@ -194,6 +259,10 @@ section.selected {
 
 .positiveForces {
   border-right: 1px solid #F5F5F5;
+}
+
+.forces div div {
+  margin-bottom: 22px;
 }
 
 
@@ -349,13 +418,27 @@ p, textarea {
   background-position-y: -6px;
 }
 
-.card.focused textarea,
-.forces div.focused textarea {
+.card.focused textarea {
   background-image: repeating-linear-gradient(transparent, transparent 28px, #7FB4FF 28px, #7FB4FF 29px);
+}
+
+.forces textarea {
+  background-image: repeating-linear-gradient(transparent, transparent 23px, #e6e6e6 23px, #e6e6e6 24px);
+  background-position-y: -2px;
+}
+
+.forces div.focused textarea {
+  background-image: repeating-linear-gradient(transparent, transparent 23px, #7FB4FF 23px, #7FB4FF 24px);
 }
 
 .card.focused h2 {
   color: #7FB4FF;
+}
+
+.forces p,
+.forces textarea {
+  font-size: 14pt;
+  line-height: 18pt;
 }
 
 #close {
@@ -540,6 +623,10 @@ header input[type=text]:focus {
 
   .card p {
     margin: 0 0 20px 0;
+  }
+
+  .selected .separator {
+    display: none;
   }
 
   p, textarea {
