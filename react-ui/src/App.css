@@ -109,6 +109,8 @@ section {
 }
 .separator li {
   flex: 1;
+  min-width: 240px;
+  max-width: 400px;
 }
 .separator li span {
   display: block;
@@ -206,6 +208,14 @@ section.selected {
   margin-right: 4px;
 }
 
+.selected .separator {
+  justify-content: center;
+}
+
+.selected .separator li {
+  max-width: 440px;
+}
+
 .selected .separator li span {
   background-color: #33333380;
 }
@@ -228,13 +238,11 @@ section.selected {
   left: 0;
   right: 0;
   padding: 30px 20px 30px 30px;
-  background-repeat: no-repeat;
-  background-position-x: 30px;
-  background-position-y: 30px;
   text-align: right;
-  background-color: transparent;
-  background-image: linear-gradient(transparent 0%, rgba(255, 255, 255, 0.97) 5%, rgba(255, 255, 255, 0.97) 100%);
-  background-image: url('/logo-gray.svg');
+  background-image: url('/logo-gray.svg'), linear-gradient(transparent 0%, rgba(255, 255, 255, 0.97) 5%, rgba(255, 255, 255, 0.97) 100%);
+  background-repeat: no-repeat;
+  background-position-x: 30px, 0;
+  background-position-y: 30px, 0;
 }
 
 #close {
