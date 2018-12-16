@@ -149,7 +149,7 @@ class JobStory extends Component {
             }
             {this.props.selected && this.state.editing && 
             // Product and usertype tags -- Editing
-                <div class="tags">
+                <div className="tags">
                     <div><select defaultValue={this.props.job.productid} onChange={this.handleProductChange}>
                         {this.state.products.map(p => 
                             <option key={p.id} value={p.id}>{p.title}</option>

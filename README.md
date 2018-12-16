@@ -13,7 +13,8 @@ A web app to store, edit and search job stories organized by products and user t
     - [x] Create a separate `route` containing job story `id` (what about pre-filtered URLs?)
     - [x] Editing toolbar should only be displayed in the single job story view
 - [ ] **Refined job story layout**
-    - [ ] Breadcrumbs divider
+    - [x] Breadcrumbs divider
+    - [ ] Force arrows
     - [x] **Special layout for single view:**
         - [x] Blocking bg layer
         - [x] Edit btn
